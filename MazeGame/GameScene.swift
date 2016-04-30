@@ -27,6 +27,7 @@ class GameScene: SKScene {
         hero = Hero()
         hero!.position = heroLocation
         mazeWorld?.addChild(hero!)
+        hero?.currentSpeed = currentSpeed
         
     }
     
@@ -42,5 +43,6 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        hero!.update()
     }
 }
