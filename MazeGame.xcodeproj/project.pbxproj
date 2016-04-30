@@ -16,6 +16,8 @@
 		95C9247C1CD52FCD0009DDE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95C9247A1CD52FCD0009DDE5 /* LaunchScreen.storyboard */; };
 		95C924871CD52FCD0009DDE5 /* MazeGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C924861CD52FCD0009DDE5 /* MazeGameTests.swift */; };
 		95C924921CD52FCD0009DDE5 /* MazeGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C924911CD52FCD0009DDE5 /* MazeGameUITests.swift */; };
+		95C924A51CD5315C0009DDE5 /* moving.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 95C924A41CD5315C0009DDE5 /* moving.atlas */; };
+		95C924A71CD5321F0009DDE5 /* BMgermar.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 95C924A61CD5321F0009DDE5 /* BMgermar.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		95C9248D1CD52FCD0009DDE5 /* MazeGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MazeGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95C924911CD52FCD0009DDE5 /* MazeGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeGameUITests.swift; sourceTree = "<group>"; };
 		95C924931CD52FCD0009DDE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95C924A41CD5315C0009DDE5 /* moving.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = moving.atlas; sourceTree = "<group>"; };
+		95C924A61CD5321F0009DDE5 /* BMgermar.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMgermar.TTF; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +135,8 @@
 		95C9249F1CD52FF50009DDE5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				95C924A61CD5321F0009DDE5 /* BMgermar.TTF */,
+				95C924A41CD5315C0009DDE5 /* moving.atlas */,
 				95C924781CD52FCD0009DDE5 /* Assets.xcassets */,
 			);
 			name = Assets;
@@ -270,7 +276,9 @@
 				95C924701CD52FCD0009DDE5 /* GameScene.sks in Resources */,
 				95C9247C1CD52FCD0009DDE5 /* LaunchScreen.storyboard in Resources */,
 				95C924791CD52FCD0009DDE5 /* Assets.xcassets in Resources */,
+				95C924A51CD5315C0009DDE5 /* moving.atlas in Resources */,
 				95C924771CD52FCD0009DDE5 /* Main.storyboard in Resources */,
+				95C924A71CD5321F0009DDE5 /* BMgermar.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
