@@ -29,6 +29,26 @@ class GameScene: SKScene {
         mazeWorld?.addChild(hero!)
         hero?.currentSpeed = currentSpeed
         
+        let waitAction: SKAction = SKAction.waitForDuration(0.5)
+        self.runAction(waitAction, completion: {
+            
+            let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedRight:") )
+            swipeRight.direction = .Right
+            view.addGestureRecognizer(swipeRight)
+            
+            let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedLeft:") )
+            swipeLeft.direction = .Left
+            view.addGestureRecognizer(swipeLeft)
+            
+            let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedUp:") )
+            swipeUp.direction = .Up
+            view.addGestureRecognizer(swipeUp)
+            
+            let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedDown:") )
+            swipeDown.direction = .Down
+            view.addGestureRecognizer(swipeDown)
+        })
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -43,6 +63,26 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        hero!.update()
+        hero?.update()
+    }
+    
+    func swipedRight(sender: UISwipeGestureRecognizer) {
+        
+        hero?.goRight()
+    }
+    
+    func swipedLeft(sender: UISwipeGestureRecognizer) {
+        
+        hero?.goLeft()
+    }
+    
+    func swipedUp(sender: UISwipeGestureRecognizer) {
+        
+        hero?.goUp()
+    }
+    
+    func swipedDown(sender: UISwipeGestureRecognizer) {
+        
+        hero?.goDown()
     }
 }

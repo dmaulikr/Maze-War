@@ -27,6 +27,8 @@ class Hero: SKNode {
     var currentDirection = Direction.Up
     var desiredDirection = Direction.None
     
+    // MARK: Getter/Setter
+    
     var objectSprite: SKSpriteNode {
         get {
             return _objectSprite!
@@ -88,4 +90,27 @@ class Hero: SKNode {
     func degreesToRadians(degrees: Double) -> Double {
         return degrees / 180 * Double(M_PI)
     }
+    
+    func goUp() {
+        
+        currentDirection = .Up
+    }
+    
+    func goDown() {
+        
+        currentDirection = .Down
+    }
+    
+    func goLeft() {
+        
+        currentDirection = .Left
+        
+    }
+    
+    func goRight() {
+        
+        currentDirection = .Right
+        
+    }
+    
 }
