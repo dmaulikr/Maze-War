@@ -24,6 +24,10 @@ class GameScene: SKScene {
         mazeWorld = childNodeWithName("mazeWorld")
         heroLocation = mazeWorld!.childNodeWithName("startingPoint")!.position
         
+        hero = Hero()
+        hero!.position = heroLocation
+        mazeWorld?.addChild(hero!)
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

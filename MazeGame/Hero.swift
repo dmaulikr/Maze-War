@@ -11,4 +11,19 @@ import SpriteKit
 
 class Hero: SKNode {
     
+    var objectSprite:SKSpriteNode?
+    
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implimented")
+    }
+    
+    override init() {
+        super.init()
+        
+        print("hero was added")
+        
+        objectSprite = SKSpriteNode(imageNamed: "hero")
+        addChild(objectSprite!)
+    }
 }
