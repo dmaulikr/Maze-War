@@ -101,13 +101,10 @@
 		95C9246C1CD52FCC0009DDE5 /* MazeGame */ = {
 			isa = PBXGroup;
 			children = (
-				95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */,
-				95C9246F1CD52FCD0009DDE5 /* GameScene.sks */,
-				95C924711CD52FCD0009DDE5 /* GameScene.swift */,
-				95C924731CD52FCD0009DDE5 /* GameViewController.swift */,
-				95C924751CD52FCD0009DDE5 /* Main.storyboard */,
-				95C924781CD52FCD0009DDE5 /* Assets.xcassets */,
-				95C9247A1CD52FCD0009DDE5 /* LaunchScreen.storyboard */,
+				95C924A01CD530190009DDE5 /* Model */,
+				95C924A11CD5301F0009DDE5 /* View */,
+				95C924A31CD5303C0009DDE5 /* Controller */,
+				95C9249F1CD52FF50009DDE5 /* Assets */,
 				95C9247D1CD52FCD0009DDE5 /* Info.plist */,
 			);
 			path = MazeGame;
@@ -129,6 +126,41 @@
 				95C924931CD52FCD0009DDE5 /* Info.plist */,
 			);
 			path = MazeGameUITests;
+			sourceTree = "<group>";
+		};
+		95C9249F1CD52FF50009DDE5 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				95C924781CD52FCD0009DDE5 /* Assets.xcassets */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		95C924A01CD530190009DDE5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				95C9246F1CD52FCD0009DDE5 /* GameScene.sks */,
+				95C924711CD52FCD0009DDE5 /* GameScene.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		95C924A11CD5301F0009DDE5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				95C924751CD52FCD0009DDE5 /* Main.storyboard */,
+				95C9247A1CD52FCD0009DDE5 /* LaunchScreen.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		95C924A31CD5303C0009DDE5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */,
+				95C924731CD52FCD0009DDE5 /* GameViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,6 +440,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MazeGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.Redih.MazeGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -419,6 +452,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MazeGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.Redih.MazeGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
