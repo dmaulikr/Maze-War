@@ -27,6 +27,8 @@ class Hero: SKNode {
     var currentDirection = Direction.Up
     var desiredDirection = Direction.None
     
+    var movingAnimation: SKAction = SKAction()
+    
     // MARK: Getter/Setter
     
     var objectSprite: SKSpriteNode {
@@ -56,6 +58,9 @@ class Hero: SKNode {
         
         objectSprite = SKSpriteNode(imageNamed: "hero")
         addChild(objectSprite)
+        
+        setUpAnimation()
+        runAnimation()
     }
     
     // MARK: Functions
@@ -94,23 +99,55 @@ class Hero: SKNode {
     func goUp() {
         
         currentDirection = .Up
+        runAnimation()
     }
     
     func goDown() {
         
         currentDirection = .Down
+        runAnimation()
     }
     
     func goLeft() {
         
         currentDirection = .Left
+        runAnimation()
         
     }
     
     func goRight() {
         
         currentDirection = .Right
+        runAnimation()
         
+    }
+    
+    
+    func setUpAnimation() {
+        
+        let atlas = SKTextureAtlas(named: "moving")
+        let array:[String] = ["moving0001","moving0002", "moving0003", "moving0004", "moving0003", "moving0002"]
+        
+        var atlasTextures:[SKTexture] = []
+        
+        for x in 0..<array.count {
+            let texture: SKTexture = atlas.textureNamed(array[x])
+            atlasTextures.insert(texture, atIndex: x)
+        }
+        
+        let atlasAnimation = SKAction.animateWithTextures(atlasTextures, timePerFrame: 1.0/30, resize: true, restore: false)
+        movingAnimation = SKAction.repeatActionForever(atlasAnimation)
+    }
+    
+    func runAnimation() {
+       
+        objectSprite.runAction(movingAnimation)
+        
+    }
+    
+    func stopAnimation() {
+        
+        objectSprite.removeAllActions()
     }
     
 }
