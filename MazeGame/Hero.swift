@@ -121,6 +121,7 @@ class Hero: SKNode {
         return degrees / 180 * Double(M_PI)
     }
     
+    //MARK: Control Functions
     func goUp() {
         
         currentDirection = .Up
@@ -147,6 +148,8 @@ class Hero: SKNode {
         
     }
     
+    
+    //MARK: Animation Functions
     
     func setUpAnimation() {
         

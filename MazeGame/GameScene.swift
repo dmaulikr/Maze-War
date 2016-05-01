@@ -26,7 +26,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     // MARK: VARS
     
-    
+    // Game Variables should be in a singleton
     var currentSpeed:Float = 2
     var heroLocation:CGPoint = CGPointZero
     var mazeWorld:SKNode?
@@ -40,18 +40,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        
-        self.backgroundColor = SKColor.blackColor()
-        view.showsPhysics = true
-        
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-        
+        // set our delegates that the class conforms to
         physicsWorld.contactDelegate = self
         
+        // set background colour of our view
+        self.backgroundColor = SKColor.blackColor()
+        //show physics bodies
+        view.showsPhysics = true
+        
+        // set gravity to zero for now
+        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        
+        
+        // set the anchor point of the maze
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         
-        /* USe TMX File */
+        /* Use TMX File */
         if (useTMXFiles == true) {
             self.enumerateChildNodesWithName("*") {
                 node, stop in
@@ -69,8 +74,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
         /* hero and Maze */
-        
-        
         hero = Hero()
         hero!.position = heroLocation
         mazeWorld?.addChild(hero!)
@@ -120,16 +123,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
 //        }
     }
    
+    // updates the hero position
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
         hero?.update()
     }
+    // center the maze node on teh hero
+    override func didSimulatePhysics() {
+        
+        if (heroIsDead == false) {
+            
+            self.centerOnNode(hero!)
+            
+        }
+    }
+
     
     
     // MARK: Functions
     
-    
+    // gets the path of the tmx file and sets up the parser
     func parseTMXFileWithName(name: String) {
         
         let path:String = NSBundle.mainBundle().pathForResource(name, ofType: "tmx")!
@@ -139,7 +153,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         parser.delegate = self
         parser.parse()
     }
-    
+    //this parses the tmx file and sets teh positions of the boundaries and other game items
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
         if (elementName == "object") {
@@ -167,7 +181,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
         }
     }
-    
+    // set boudaries from sks file if used
     func setUpBoundaryFromSKS() {
        
         mazeWorld?.enumerateChildNodesWithName("boundary") {
@@ -188,7 +202,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
     }
     
-    
+    // swipe control functions
     func swipedRight(sender: UISwipeGestureRecognizer) {
         
         hero?.goRight()
@@ -208,6 +222,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         hero?.goDown()
     }
+    
+    // MARK: Collision Functions
     
     func didBeginContact(contact: SKPhysicsContact) {
         
@@ -236,14 +252,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
     }
     
-    override func didSimulatePhysics() {
-        
-        if (heroIsDead == false) {
-            
-            self.centerOnNode(hero!)
-            
-        }
-    }
     
     func centerOnNode(node: SKNode) {
         
