@@ -24,13 +24,16 @@ enum BodyType:UInt32 {
 
 class GameScene: SKScene {
     
+    // MARK: VARS
+    
+    
     var currentSpeed:Float = 2
     var heroLocation:CGPoint = CGPointZero
     var mazeWorld:SKNode?
     var hero:Hero?
+    var useTMXFiles:Bool = false
     
-    
-    
+    // MARK: OVeride Functions
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -68,6 +71,18 @@ class GameScene: SKScene {
             view.addGestureRecognizer(swipeDown)
         })
         
+        /* Set up based on TMX or SKS */
+        
+        if (useTMXFiles == true) {
+            
+            print("setup with TMX")
+        }else {
+            
+            print("setup with SKS")
+            setUpBoundaryFromSKS()
+        }
+        
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -84,6 +99,30 @@ class GameScene: SKScene {
         /* Called before each frame is rendered */
         hero?.update()
     }
+    
+    
+    // MARK: Functions
+    
+    
+    func setUpBoundaryFromSKS() {
+       
+        mazeWorld?.enumerateChildNodesWithName("boundary") {
+            node, stop in
+            
+            if let boundary = node as? SKSpriteNode {
+                
+                print("found Boundary")
+                let rect: CGRect = CGRect(origin: boundary.position, size: boundary.size)
+                let newBoundary: Boundary = Boundary(fromSKSWithRect: rect)
+                self.mazeWorld?.addChild(newBoundary)
+                newBoundary.position = boundary.position
+                
+                boundary.removeFromParent()
+
+            }
+        }
+    }
+    
     
     func swipedRight(sender: UISwipeGestureRecognizer) {
         
