@@ -105,6 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             setUpBoundaryFromSKS()
             setUpStarsFromSKS()
+            setUpEdgeFromSKS()
             
         }else {
             
@@ -161,7 +162,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             if(type  == "Boundary") {
                 
-                let newBoundary:Boundary = Boundary(theDict: attributeDict)
+                var tmxDict = attributeDict
+                tmxDict.updateValue("false", forKey: "isEdge")
+                
+                let newBoundary:Boundary = Boundary(theDict: tmxDict)
+                mazeWorld?.addChild(newBoundary)
+                
+            }else if (type == "Edge") {
+                
+                var tmxDict = attributeDict
+                tmxDict.updateValue("true", forKey: "isEdge")
+            
+                let newBoundary:Boundary = Boundary(theDict: tmxDict)
                 mazeWorld?.addChild(newBoundary)
                 
             }else if (type  == "Star") {
@@ -196,15 +208,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             if let boundary = node as? SKSpriteNode {
                 
-                print("found Boundary")
                 let rect: CGRect = CGRect(origin: boundary.position, size: boundary.size)
-                let newBoundary: Boundary = Boundary(fromSKSWithRect: rect)
+                let newBoundary: Boundary = Boundary(fromSKSWithRect: rect, isEdge: false)
                 newBoundary.position = boundary.position
                 self.mazeWorld?.addChild(newBoundary)
                 
                 
                 boundary.removeFromParent()
 
+            }
+        }
+    }
+    
+    func setUpEdgeFromSKS() {
+        
+        mazeWorld?.enumerateChildNodesWithName("edge") {
+            node, stop in
+            
+            if let edge = node as? SKSpriteNode {
+                
+            
+                let rect: CGRect = CGRect(origin: edge.position, size: edge.size)
+                let newEdge: Boundary = Boundary(fromSKSWithRect: rect, isEdge: true)
+                newEdge.position = edge.position
+                self.mazeWorld?.addChild(newEdge)
+                
+                
+                edge.removeFromParent()
+                
             }
         }
     }
@@ -221,7 +252,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 newStar.position = star.position
                 
                 self.starsTotal++
-                print(self.starsTotal)
                 
                 star.removeFromParent()
                 
@@ -257,6 +287,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
+            
+        case BodyType.boundary.rawValue | BodyType.sensorUp.rawValue :
+            hero!.upSensorContactStart()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorDown.rawValue :
+            hero!.downSensorContactStart()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorRight.rawValue :
+            hero!.rightSensorContactStart()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorLeft.rawValue :
+            hero!.leftSensorContactStart()
+            
         case BodyType.hero.rawValue | BodyType.star.rawValue :
             
             if let star = contact.bodyA.node as? Star {
@@ -284,8 +327,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
           let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
+        
+        case BodyType.boundary.rawValue | BodyType.sensorUp.rawValue :
+            hero!.upSensorContactEnd()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorDown.rawValue :
+            hero!.downSensorContactEnd()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorRight.rawValue :
+            hero!.rightSensorContactEnd()
+            
+        case BodyType.boundary.rawValue | BodyType.sensorLeft.rawValue :
+            hero!.leftSensorContactEnd()
+        
         case BodyType.hero.rawValue | BodyType.boundary.rawValue :
-            print("not into wall")
+            break
             
         default:
             return
