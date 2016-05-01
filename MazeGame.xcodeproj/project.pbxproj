@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		959ECFE71CD65C7600494D9E /* Boundary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959ECFE61CD65C7600494D9E /* Boundary.swift */; };
+		959ECFE91CD66D7F00494D9E /* Maze.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 959ECFE81CD66D7F00494D9E /* Maze.tmx */; };
 		95C9246E1CD52FCC0009DDE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */; };
 		95C924701CD52FCD0009DDE5 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 95C9246F1CD52FCD0009DDE5 /* GameScene.sks */; };
 		95C924721CD52FCD0009DDE5 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C924711CD52FCD0009DDE5 /* GameScene.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		959ECFE61CD65C7600494D9E /* Boundary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boundary.swift; sourceTree = "<group>"; };
+		959ECFE81CD66D7F00494D9E /* Maze.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze.tmx; sourceTree = "<group>"; };
 		95C9246A1CD52FCC0009DDE5 /* MazeGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95C9246F1CD52FCD0009DDE5 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		95C9249F1CD52FF50009DDE5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				959ECFE81CD66D7F00494D9E /* Maze.tmx */,
 				95C924A61CD5321F0009DDE5 /* BMgermar.TTF */,
 				95C924A41CD5315C0009DDE5 /* moving.atlas */,
 				95C924781CD52FCD0009DDE5 /* Assets.xcassets */,
@@ -280,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95C924701CD52FCD0009DDE5 /* GameScene.sks in Resources */,
+				959ECFE91CD66D7F00494D9E /* Maze.tmx in Resources */,
 				95C9247C1CD52FCD0009DDE5 /* LaunchScreen.storyboard in Resources */,
 				95C924791CD52FCD0009DDE5 /* Assets.xcassets in Resources */,
 				95C924A51CD5315C0009DDE5 /* moving.atlas in Resources */,
