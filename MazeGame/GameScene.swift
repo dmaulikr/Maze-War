@@ -22,7 +22,7 @@ enum BodyType:UInt32 {
 }
 
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: VARS
     
@@ -33,7 +33,7 @@ class GameScene: SKScene {
     var hero:Hero?
     var useTMXFiles:Bool = false
     
-    // MARK: OVeride Functions
+    // MARK: Overide Functions
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -42,6 +42,10 @@ class GameScene: SKScene {
         view.showsPhysics = true
         
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        
+        physicsWorld.contactDelegate = self
+        
+        /* hero and Maze */
         
         mazeWorld = childNodeWithName("mazeWorld")
         heroLocation = mazeWorld!.childNodeWithName("startingPoint")!.position
@@ -97,6 +101,7 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        
         hero?.update()
     }
     
@@ -114,8 +119,9 @@ class GameScene: SKScene {
                 print("found Boundary")
                 let rect: CGRect = CGRect(origin: boundary.position, size: boundary.size)
                 let newBoundary: Boundary = Boundary(fromSKSWithRect: rect)
-                self.mazeWorld?.addChild(newBoundary)
                 newBoundary.position = boundary.position
+                self.mazeWorld?.addChild(newBoundary)
+                
                 
                 boundary.removeFromParent()
 
@@ -142,5 +148,32 @@ class GameScene: SKScene {
     func swipedDown(sender: UISwipeGestureRecognizer) {
         
         hero?.goDown()
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        switch(contactMask) {
+        case BodyType.hero.rawValue | BodyType.boundary.rawValue :
+                print("ran into wall")
+            
+            
+        default:
+            return
+        }
+    }
+    
+    func didEndContact(contact: SKPhysicsContact) {
+        
+          let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        switch(contactMask) {
+        case BodyType.hero.rawValue | BodyType.boundary.rawValue :
+            print("not into wall")
+            
+        default:
+            return
+        }
     }
 }
