@@ -27,6 +27,29 @@ class Boundary: SKNode {
         
     }
     
+    init( theDict: Dictionary<String, String> ) {
+        super.init()
+        let theX:String = theDict["x"]!
+        let x:Int = Int(theX)!
+    
+        let theY:String = theDict["y"]!
+        let y:Int = Int(theY)!
+        
+        let theWidth:String = theDict["width"]!
+        let width:Int = Int(theWidth)!
+        
+        let theHeight:String = theDict["height"]!
+        let height:Int = Int(theHeight)!
+        
+        let location: CGPoint = CGPoint(x: x, y: y * -1)
+        let size: CGSize = CGSize(width: width, height: height)
+        
+        self.position = CGPoint(x: location.x + (size.width / 2), y: location.y - (size.height / 2))
+        let rect: CGRect = CGRectMake(-(size.width / 2), -(size.height / 2), size.width, size.height)
+        
+        createBoundary(rect)
+    }
+    
     
     // MARK: Functions
     
