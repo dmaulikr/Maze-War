@@ -23,7 +23,8 @@ class Hero: SKNode {
     // MARK: Properties
     
     private var _objectSprite:SKSpriteNode?
-    var currentSpeed: Float = 5
+    private var _physicsBodySize: CGSize!
+    var currentSpeed: Float = 2
     var currentDirection = Direction.Up
     var desiredDirection = Direction.None
     
@@ -43,6 +44,18 @@ class Hero: SKNode {
         }
     }
     
+    var physicsBodySize: CGSize {
+        
+        get {
+            
+            return _physicsBodySize
+        }
+        
+        set (largerSize) {
+            
+            _physicsBodySize = largerSize
+        }
+    }
     
     
     // MARK: Initialiser
@@ -61,6 +74,18 @@ class Hero: SKNode {
         
         setUpAnimation()
         runAnimation()
+        
+        physicsBodySize = CGSize(width: objectSprite.size.width * 1.2, height: objectSprite.size.height)
+        self.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize)
+        self.physicsBody!.friction = 0 // smooth
+        self.physicsBody!.dynamic = true // true keeps the object within boundries better
+        self.physicsBody!.restitution = 0 // no bounce
+        self.physicsBody!.allowsRotation = false //
+        self.physicsBody!.affectedByGravity = false
+        
+        self.physicsBody!.categoryBitMask = BodyType.hero.rawValue
+//        self.physicsBody!.collisionBitMask = 0 // wont collide with anything
+        self.physicsBody!.contactTestBitMask = BodyType.boundary.rawValue | BodyType.star.rawValue
     }
     
     // MARK: Functions
