@@ -103,8 +103,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         if (useTMXFiles == false) {
             
-            print("setup with SKS")
             setUpBoundaryFromSKS()
+            setUpStarsFromSKS()
             
         }else {
             
@@ -163,6 +163,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
                 let newBoundary:Boundary = Boundary(theDict: attributeDict)
                 mazeWorld?.addChild(newBoundary)
+                
+            }else if (type  == "Star") {
+                
+                let newStar:Star = Star(fromTMXFileWithDict: attributeDict)
+                mazeWorld?.addChild(newStar)
+                starsTotal++
+
             }else if ( type == "Portal") {
                 
                 let theName:String = attributeDict["name"]!
@@ -202,6 +209,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
     }
     
+    // set up starts from sks file
+    func setUpStarsFromSKS() {
+        mazeWorld!.enumerateChildNodesWithName("star") {
+            node, stop in
+            
+            if let star = node as? SKSpriteNode {
+                
+                let newStar:Star = Star()
+                self.mazeWorld!.addChild(newStar)
+                newStar.position = star.position
+                
+                self.starsTotal++
+                print(self.starsTotal)
+                
+                star.removeFromParent()
+                
+            }
+        }
+    }
+    
     // swipe control functions
     func swipedRight(sender: UISwipeGestureRecognizer) {
         
@@ -230,9 +257,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
-        case BodyType.hero.rawValue | BodyType.boundary.rawValue :
-                print("ran into wall")
+        case BodyType.hero.rawValue | BodyType.star.rawValue :
             
+            if let star = contact.bodyA.node as? Star {
+                
+                star.removeFromParent()
+                
+            }else if let star = contact.bodyB.node as? Star {
+                
+                star.removeFromParent()
+                
+            }
+            
+            starAquired++
+            
+            
+           
             
         default:
             return

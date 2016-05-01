@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		959ECFE71CD65C7600494D9E /* Boundary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959ECFE61CD65C7600494D9E /* Boundary.swift */; };
 		959ECFE91CD66D7F00494D9E /* Maze.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 959ECFE81CD66D7F00494D9E /* Maze.tmx */; };
+		959ECFED1CD68B1500494D9E /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959ECFEC1CD68B1500494D9E /* Star.swift */; };
 		95C9246E1CD52FCC0009DDE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */; };
 		95C924701CD52FCD0009DDE5 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 95C9246F1CD52FCD0009DDE5 /* GameScene.sks */; };
 		95C924721CD52FCD0009DDE5 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C924711CD52FCD0009DDE5 /* GameScene.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		959ECFE61CD65C7600494D9E /* Boundary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boundary.swift; sourceTree = "<group>"; };
 		959ECFE81CD66D7F00494D9E /* Maze.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze.tmx; sourceTree = "<group>"; };
+		959ECFEC1CD68B1500494D9E /* Star.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
 		95C9246A1CD52FCC0009DDE5 /* MazeGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MazeGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95C9246F1CD52FCD0009DDE5 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				95C924711CD52FCD0009DDE5 /* GameScene.swift */,
 				95C924A81CD538E10009DDE5 /* Hero.swift */,
 				959ECFE61CD65C7600494D9E /* Boundary.swift */,
+				959ECFEC1CD68B1500494D9E /* Star.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				95C924721CD52FCD0009DDE5 /* GameScene.swift in Sources */,
 				95C924741CD52FCD0009DDE5 /* GameViewController.swift in Sources */,
 				95C9246E1CD52FCC0009DDE5 /* AppDelegate.swift in Sources */,
+				959ECFED1CD68B1500494D9E /* Star.swift in Sources */,
 				95C924A91CD538E10009DDE5 /* Hero.swift in Sources */,
 				959ECFE71CD65C7600494D9E /* Boundary.swift in Sources */,
 			);
