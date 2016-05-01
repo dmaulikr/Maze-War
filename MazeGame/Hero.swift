@@ -25,7 +25,7 @@ class Hero: SKNode {
     private var _objectSprite:SKSpriteNode?
     private var _physicsBodySize: CGSize!
     var currentSpeed: Float = 2
-    var currentDirection = Direction.Up
+    var currentDirection = Direction.Right
     var desiredDirection = Direction.None
     
     var movingAnimation: SKAction = SKAction()

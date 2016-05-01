@@ -32,6 +32,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var mazeWorld:SKNode?
     var hero:Hero?
     var useTMXFiles:Bool = true
+    var heroIsDead:Bool = false
+    var starAquired:Int = 0
+    var starsTotal:Int = 0
     
     // MARK: Overide Functions
     
@@ -44,6 +47,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
         physicsWorld.contactDelegate = self
+        
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         
         /* USe TMX File */
@@ -144,7 +149,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
                 let newBoundary:Boundary = Boundary(theDict: attributeDict)
                 mazeWorld?.addChild(newBoundary)
+            }else if ( type == "Portal") {
+                
+                let theName:String = attributeDict["name"]!
+                if (theName == "StartingPoint") {
+                    let theX:String = attributeDict["x"]!
+                    let x:Int = Int(theX)!
+                    
+                    let theY:String = attributeDict["y"]!
+                    let y:Int = Int(theY)!
+                    
+                    hero!.position = CGPoint(x: x, y: y * -1)
+                    heroLocation = hero!.position
+                    
+                }
             }
+                
         }
     }
     
@@ -214,5 +234,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         default:
             return
         }
+    }
+    
+    override func didSimulatePhysics() {
+        
+        if (heroIsDead == false) {
+            
+            self.centerOnNode(hero!)
+            
+        }
+    }
+    
+    func centerOnNode(node: SKNode) {
+        
+        let cameraPositionInScene:CGPoint = self.convertPoint(node.position, fromNode: mazeWorld!)
+        mazeWorld!.position = CGPoint(x: mazeWorld!.position.x - cameraPositionInScene.x, y: mazeWorld!.position.y - cameraPositionInScene.y)
+        
+        
+        
     }
 }
