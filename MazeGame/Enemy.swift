@@ -25,7 +25,7 @@ class Enemy: SKNode {
     // MARK: Variables
     var heroLocationIs = HeroIs.Southwest
     var currentDirection = EnemyDirection.Up
-    var enemySpeed:Float = 2
+    var enemySpeed:Float = 3
     var previousLocation1: CGPoint = CGPointZero
     var previousLocation2: CGPoint = CGPoint(x: 1, y: 1)
     var isStuck:Bool = false
@@ -237,8 +237,11 @@ class Enemy: SKNode {
         previousLocation1 = self.position
     }
     
+
     
-}
+    
+    
+}// end of class
 
 
 

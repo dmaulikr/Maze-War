@@ -48,7 +48,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         // set background colour of our view
         self.backgroundColor = SKColor.blackColor()
         //show physics bodies
-        view.showsPhysics = true
+        view.showsPhysics = false
         
         // set gravity to zero for now
         self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
@@ -132,24 +132,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
-        hero?.update()
+        if (heroIsDead == false) {
         
-        mazeWorld!.enumerateChildNodesWithName("enemy*") {
-            node, stop in
+            hero?.update()
+        
+            mazeWorld!.enumerateChildNodesWithName("enemy*") {
+                node, stop in
             
-            if let enemy = node as? Enemy {
+                if let enemy = node as? Enemy {
             
-                if(enemy.isStuck == true) {
+                    if(enemy.isStuck == true) {
                     
-                    enemy.heroLocationIs = self.returnTheDirection(enemy)
-                    enemy.decideDirection()
-                    enemy.isStuck = false
-                }
-                enemy.update()
+                        enemy.heroLocationIs = self.returnTheDirection(enemy)
+                        enemy.decideDirection()
+                        enemy.isStuck = false
+                    }
+                    enemy.update()
                 
+                }
             }
+        }else {
+            
+            resetEnemies()
+            
+            hero!.rightBlocked = false
+            hero!.position = heroLocation
+            heroIsDead = false
+            hero!.currentDirection = .Right
+            hero!.desiredDirection = .None
+            hero!.goRight()
+            hero!.runAnimation()
+            
         }
-        
     }
     // center the maze node on teh hero
     override func didSimulatePhysics() {
@@ -348,7 +362,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         switch(contactMask) {
-            
+        
+        case BodyType.hero.rawValue | BodyType.enemy.rawValue :
+            reloadLevel()
+        
         case BodyType.boundary.rawValue | BodyType.sensorUp.rawValue :
             hero!.upSensorContactStart()
             
@@ -462,6 +479,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
     }
     
+    // MARK: Level Stuff
+    
+    func reloadLevel() {
+        
+        heroIsDead = true
+        
+    }
     
     
-}
+    func  resetEnemies() {
+        
+        for (name, location) in enemyDict {
+            
+            mazeWorld!.childNodeWithName(name)?.position = location
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+}//end of class
