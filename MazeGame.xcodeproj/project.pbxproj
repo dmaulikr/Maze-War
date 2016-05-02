@@ -22,6 +22,7 @@
 		95C924A51CD5315C0009DDE5 /* moving.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 95C924A41CD5315C0009DDE5 /* moving.atlas */; };
 		95C924A71CD5321F0009DDE5 /* BMgermar.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 95C924A61CD5321F0009DDE5 /* BMgermar.TTF */; };
 		95C924A91CD538E10009DDE5 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C924A81CD538E10009DDE5 /* Hero.swift */; };
+		95EF49FC1CD7C9DF00314914 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EF49FB1CD7C9DF00314914 /* Enemy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		95C924A41CD5315C0009DDE5 /* moving.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = moving.atlas; sourceTree = "<group>"; };
 		95C924A61CD5321F0009DDE5 /* BMgermar.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMgermar.TTF; sourceTree = "<group>"; };
 		95C924A81CD538E10009DDE5 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		95EF49FB1CD7C9DF00314914 /* Enemy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				95C924A81CD538E10009DDE5 /* Hero.swift */,
 				959ECFE61CD65C7600494D9E /* Boundary.swift */,
 				959ECFEC1CD68B1500494D9E /* Star.swift */,
+				95EF49FB1CD7C9DF00314914 /* Enemy.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95EF49FC1CD7C9DF00314914 /* Enemy.swift in Sources */,
 				95C924721CD52FCD0009DDE5 /* GameScene.swift in Sources */,
 				95C924741CD52FCD0009DDE5 /* GameViewController.swift in Sources */,
 				95C9246E1CD52FCC0009DDE5 /* AppDelegate.swift in Sources */,

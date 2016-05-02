@@ -35,6 +35,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var heroIsDead:Bool = false
     var starAquired:Int = 0
     var starsTotal:Int = 0
+    var enemyCount: Int = 0
+    var enemyDict:[String : CGPoint] = [:]
     
     // MARK: Overide Functions
     
@@ -106,6 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             setUpBoundaryFromSKS()
             setUpStarsFromSKS()
             setUpEdgeFromSKS()
+            setupEnemiesFromSKS()
             
         }else {
             
@@ -142,6 +145,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     
     // MARK: Functions
+   
+    
     
     // gets the path of the tmx file and sets up the parser
     func parseTMXFileWithName(name: String) {
@@ -195,10 +200,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                     heroLocation = hero!.position
                     
                 }
+            }else if (type == "Enemy") {
+                
+                enemyCount++
+                let theName:String = attributeDict["name"]!
+                let newEnemy:Enemy = Enemy(fromTMXFileWithDict: attributeDict)
+                mazeWorld!.addChild(newEnemy)
+                
+                newEnemy.name = theName
+                
+                let location:CGPoint = newEnemy.position
+                enemyDict.updateValue(location, forKey: newEnemy.name!)
+                
             }
                 
         }
     }
+    
+    
+    
+    func setupEnemiesFromSKS() {
+        
+        mazeWorld?.enumerateChildNodesWithName("enemy*") {
+            node, stop in
+         
+            if let enemy = node as? SKSpriteNode {
+                
+                self.enemyCount++
+                
+                let newEnemy:Enemy = Enemy(fromSKSWithImage: enemy.name!)
+                self.mazeWorld!.addChild(newEnemy)
+                newEnemy.position = enemy.position
+                newEnemy.name = enemy.name
+                
+                self.enemyDict.updateValue(newEnemy.position, forKey: newEnemy.name!)
+                
+                enemy.removeFromParent()
+            }
+        }
+        
+        
+    }
+    
     // set boudaries from sks file if used
     func setUpBoundaryFromSKS() {
        
