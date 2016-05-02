@@ -62,10 +62,10 @@
   <object id="59" type="Star" x="430" y="390" width="10" height="10"/>
   <object id="60" type="Star" x="350" y="390" width="10" height="10"/>
   <object id="61" type="Star" x="310" y="390" width="10" height="10"/>
-  <object id="62" name="enemy1" type="Enemy" x="650" y="320" width="20" height="20"/>
+  <object id="62" name="enemy1" type="Enemy" x="560" y="320" width="20" height="20"/>
   <object id="63" type="Boundary" x="920" y="110" width="50" height="190"/>
   <object id="64" type="Boundary" x="920" y="350" width="150" height="40"/>
-  <object id="65" name="enemy2" type="Enemy" x="660" y="580" width="20" height="20"/>
+  <object id="65" name="enemy2" type="Enemy" x="880" y="650" width="20" height="20"/>
   <object id="66" type="Boundary" x="1020" y="110" width="50" height="190"/>
   <object id="67" type="Edge" x="240" y="60" width="880" height="720"/>
   <object id="68" type="Star" x="1090" y="410" width="10" height="10"/>

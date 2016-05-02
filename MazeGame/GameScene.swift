@@ -131,6 +131,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         /* Called before each frame is rendered */
         
         hero?.update()
+        
+        mazeWorld!.enumerateChildNodesWithName("enemy*") {
+            node, stop in
+            
+            if let enemy = node as? Enemy {
+            
+                enemy.update()
+                
+            }
+        }
+        
     }
     // center the maze node on teh hero
     override func didSimulatePhysics() {
@@ -394,6 +405,43 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         mazeWorld!.position = CGPoint(x: mazeWorld!.position.x - cameraPositionInScene.x, y: mazeWorld!.position.y - cameraPositionInScene.y)
         
         
+        
+    }
+    
+    // MARK: Enemy Stuff
+    
+    
+    func tellEnemiesWhereHeroIs() {
+        
+        let enemyAction:SKAction = SKAction.waitForDuration(5)
+        self.runAction(enemyAction, completion: {
+                self.tellEnemiesWhereHeroIs()
+            } )
+        
+        mazeWorld!.enumerateChildNodesWithName("enemy*") {
+            node, stop in
+            
+            if let enemy = node as? Enemy {
+                
+                if (self.hero!.position.x < enemy.position.x && self.hero!.position.y < enemy.position.y) {
+                    
+                   enemy.heroLocationIs = HeroIs.Southwest
+                    
+                }else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y < enemy.position.y) {
+                    
+                    enemy.heroLocationIs = HeroIs.Southeast
+                    
+                } else if (self.hero!.position.x < enemy.position.x && self.hero!.position.y >  enemy.position.y) {
+                    
+                    enemy.heroLocationIs = HeroIs.Northwest
+                    
+                } else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y >  enemy.position.y) {
+                    
+                    enemy.heroLocationIs = HeroIs.Northeast
+                }
+
+            }
+        }
         
     }
 }
