@@ -114,6 +114,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             parseTMXFileWithName("Maze")
         }
+        
+        tellEnemiesWhereHeroIs()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -137,6 +139,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             if let enemy = node as? Enemy {
             
+                if(enemy.isStuck == true) {
+                    
+                    enemy.heroLocationIs = self.returnTheDirection(enemy)
+                    enemy.decideDirection()
+                    enemy.isStuck = false
+                }
                 enemy.update()
                 
             }
@@ -423,25 +431,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             if let enemy = node as? Enemy {
                 
-                if (self.hero!.position.x < enemy.position.x && self.hero!.position.y < enemy.position.y) {
-                    
-                   enemy.heroLocationIs = HeroIs.Southwest
-                    
-                }else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y < enemy.position.y) {
-                    
-                    enemy.heroLocationIs = HeroIs.Southeast
-                    
-                } else if (self.hero!.position.x < enemy.position.x && self.hero!.position.y >  enemy.position.y) {
-                    
-                    enemy.heroLocationIs = HeroIs.Northwest
-                    
-                } else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y >  enemy.position.y) {
-                    
-                    enemy.heroLocationIs = HeroIs.Northeast
-                }
+                enemy.heroLocationIs = self.returnTheDirection(enemy)
 
             }
         }
         
     }
+    
+    func returnTheDirection(enemy:Enemy) -> HeroIs {
+        
+        if (self.hero!.position.x < enemy.position.x && self.hero!.position.y < enemy.position.y) {
+            
+           return HeroIs.Southwest
+            
+        }else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y < enemy.position.y) {
+            
+            return HeroIs.Southeast
+            
+        } else if (self.hero!.position.x < enemy.position.x && self.hero!.position.y >  enemy.position.y) {
+            
+            return HeroIs.Northwest
+            
+        } else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y >  enemy.position.y) {
+            
+            return HeroIs.Northeast
+        }else {
+           
+            return HeroIs.Northeast
+        }
+        
+    }
+    
+    
+    
 }

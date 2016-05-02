@@ -87,7 +87,55 @@ class Enemy: SKNode {
     }
     
     func decideDirection() {
-        print("stuck")
+        
+        let previousDirection = currentDirection
+        
+        switch (heroLocationIs) {
+            
+        case .Southwest:
+            if (previousDirection == .Down) {
+                
+                currentDirection = .Left
+            } else {
+                
+                currentDirection = .Down
+            }
+        case .Southeast:
+            
+            if ( previousDirection == .Down) {
+                
+                currentDirection = .Right
+            } else {
+                
+                currentDirection = .Down
+            }
+            
+        case .Northeast:
+            
+            if ( previousDirection == .Up) {
+                
+                currentDirection = .Right
+            } else {
+                
+                currentDirection = .Up
+            }
+            
+        case .Northwest:
+            
+            if ( previousDirection == .Up) {
+                
+                currentDirection = .Left
+            } else {
+                
+                currentDirection = .Up
+            }
+            
+            
+            
+            
+        }
+        
+
     }
     
     func update() {
@@ -95,8 +143,30 @@ class Enemy: SKNode {
         /*  check if enemy is stuck has stayed in same location for more than one update */
         if ( Int(previousLocation2.y) == Int(previousLocation1.y) && Int(previousLocation2.x) == Int(previousLocation1.x) ) {
             
+            isStuck = true
             decideDirection()
         
+        }
+        
+        
+        let superDice = arc4random_uniform(1000)
+        if (superDice == 0) {
+            
+            let dice = arc4random_uniform(4)
+            
+            switch (dice) {
+            case 0:
+                currentDirection = .Up
+                
+            case 1:
+                currentDirection = .Left
+                
+            case 2:
+                currentDirection = .Right
+                
+            default:
+                currentDirection = .Down
+            }
         }
         
         
