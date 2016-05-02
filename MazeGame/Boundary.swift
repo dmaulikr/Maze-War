@@ -21,7 +21,7 @@ class Boundary: SKNode {
        
         super.init()
        
-        let newLocation = CGPoint(x: -(rect.size.width/2), y: -(rect.size.height/2) )
+        let newLocation = CGPoint(x: -(rect.size.width / 2), y: -(rect.size.height / 2) )
         let newRect:CGRect = CGRect (origin: newLocation, size: rect.size)
         
         createBoundary(newRect,createAsEdge: isEdge)

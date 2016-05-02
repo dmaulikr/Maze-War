@@ -110,7 +110,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }else {
             
             parseTMXFileWithName("Maze")
-            mazeWorld!.position = CGPoint(x: mazeWorld!.position.x, y: mazeWorld!.position.y + 800)
         }
     }
     
@@ -339,9 +338,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         case BodyType.boundary.rawValue | BodyType.sensorLeft.rawValue :
             hero!.leftSensorContactEnd()
-        
-        case BodyType.hero.rawValue | BodyType.boundary.rawValue :
-            break
             
         default:
             return
