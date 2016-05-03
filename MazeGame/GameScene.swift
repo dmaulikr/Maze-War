@@ -25,7 +25,7 @@ enum BodyType:UInt32 {
 class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     // MARK: VARS
-    
+   
     // Game Variables should be in a singleton
     var currentSpeed:Float = 2
     var heroLocation:CGPoint = CGPointZero
