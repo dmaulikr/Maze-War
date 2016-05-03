@@ -28,7 +28,7 @@ class Boundary: SKNode {
         
     }
     
-    init( theDict: Dictionary<String, String> ) {
+    init( theDict: [String: String] ) {
         super.init()
         
         let isEdgeAsString:String = theDict["isEdge"]!

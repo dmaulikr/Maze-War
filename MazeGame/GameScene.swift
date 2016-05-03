@@ -41,6 +41,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     // MARK: Overide Functions
     
     override func didMoveToView(view: SKView) {
+       
+        /* Parse Property List */
+        
+        let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist")
+        let dict = NSDictionary(contentsOfFile: path!)!
+        let heroDict:AnyObject = dict.objectForKey("HeroSettings")!
+
+  
         /* Setup your scene here */
         // set our delegates that the class conforms to
         physicsWorld.contactDelegate = self
@@ -76,7 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
         /* hero and Maze */
-        hero = Hero()
+        hero = Hero(heroDict: heroDict as! Dictionary)
         hero!.position = heroLocation
         mazeWorld?.addChild(hero!)
         hero?.currentSpeed = currentSpeed
