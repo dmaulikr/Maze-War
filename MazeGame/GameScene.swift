@@ -31,12 +31,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var heroLocation:CGPoint = CGPointZero
     var mazeWorld:SKNode?
     var hero:Hero?
-    var useTMXFiles:Bool = false
     var heroIsDead:Bool = false
     var starAquired:Int = 0
     var starsTotal:Int = 0
     var enemyCount: Int = 0
     var enemyDict:[String : CGPoint] = [:]
+    var enemySpeed:Float = 2
+    
+    
     
     // MARK: Overide Functions
     
@@ -48,8 +50,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let dict = NSDictionary(contentsOfFile: path!)!
         let heroDict:NSDictionary = dict.objectForKey("HeroSettings")! as! NSDictionary
         let gameDict:NSDictionary = dict.objectForKey("GameSettings")! as! NSDictionary
+        let levelArray:NSArray = dict.objectForKey("LevelSettings")! as! NSArray
+        let levelDict:NSDictionary = levelArray[currentLevel] as! NSDictionary
         
-        print(gameDict)
+        if let tmxFile = levelDict["TMXFile"] as? String {
+            
+            currentTMXFile = tmxFile
+        }
+        
+        if let sksFile = levelDict["NextSKSFile"] as? String {
+            
+            nextSKSFile = sksFile
+        }
+        
+        if let speed = levelDict["Speed"] as? Float {
+            
+            currentSpeed = speed
+        }
+        
+        if let eSpeed = levelDict["EnemySpeed"] as? Float {
+            
+           enemySpeed = eSpeed
+        
+        }
+        
+        if let Image = levelDict["Background"] as? String {
+            
+            bgImage = Image
+            
+        }
+        
+        if let logic = levelDict["EnemyLogic"] as? Double {
+            
+            enemyLogic = logic
+            
+        }
+        
+        
+//        print(levelArray)
   
         /* Setup your scene here */
         // set our delegates that the class conforms to
@@ -61,7 +99,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         view.showsPhysics = gameDict["ShowPhysics"] as! Bool
         
         if (gameDict["Gravity"] != nil) {
-            print("gravity activated")
             let newGravity:CGPoint = CGPointFromString(gameDict["Gravity"] as! String)
             physicsWorld.gravity = CGVector(dx: newGravity.x, dy: newGravity.y)
             
@@ -132,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }else {
             
-            parseTMXFileWithName("Maze")
+            parseTMXFileWithName(currentTMXFile!)
         }
         
         tellEnemiesWhereHeroIs()
@@ -260,6 +297,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 let newEnemy:Enemy = Enemy(fromTMXFileWithDict: attributeDict)
                 mazeWorld!.addChild(newEnemy)
                 
+                newEnemy.enemySpeed = self.enemySpeed
                 newEnemy.name = theName
                 
                 let location:CGPoint = newEnemy.position
@@ -272,28 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     
     
-    func setupEnemiesFromSKS() {
-        
-        mazeWorld?.enumerateChildNodesWithName("enemy*") {
-            node, stop in
-         
-            if let enemy = node as? SKSpriteNode {
-                
-                self.enemyCount++
-                
-                let newEnemy:Enemy = Enemy(fromSKSWithImage: enemy.name!)
-                self.mazeWorld!.addChild(newEnemy)
-                newEnemy.position = enemy.position
-                newEnemy.name = enemy.name
-                
-                self.enemyDict.updateValue(newEnemy.position, forKey: newEnemy.name!)
-                
-                enemy.removeFromParent()
-            }
-        }
-        
-        
-    }
+   
     
     // set boudaries from sks file if used
     func setUpBoundaryFromSKS() {
@@ -455,10 +472,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     // MARK: Enemy Stuff
     
+    func setupEnemiesFromSKS() {
+        
+        mazeWorld?.enumerateChildNodesWithName("enemy*") {
+            node, stop in
+            
+            if let enemy = node as? SKSpriteNode {
+                
+                self.enemyCount++
+                
+                let newEnemy:Enemy = Enemy(fromSKSWithImage: enemy.name!)
+                self.mazeWorld!.addChild(newEnemy)
+                newEnemy.position = enemy.position
+                newEnemy.name = enemy.name
+                newEnemy.enemySpeed = self.enemySpeed
+                
+                self.enemyDict.updateValue(newEnemy.position, forKey: newEnemy.name!)
+                
+                enemy.removeFromParent()
+            }
+        }
+        
+        
+    }
+    
     
     func tellEnemiesWhereHeroIs() {
         
-        let enemyAction:SKAction = SKAction.waitForDuration(5)
+        let enemyAction:SKAction = SKAction.waitForDuration(enemyLogic)
         self.runAction(enemyAction, completion: {
                 self.tellEnemiesWhereHeroIs()
             } )

@@ -163,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				957A8E1C1CD89DF300990AD3 /* GameData.plist */,
+				957A8E1E1CD9433900990AD3 /* GameData.swift */,
 				95C9246F1CD52FCD0009DDE5 /* GameScene.sks */,
 				957A8E201CD944FE00990AD3 /* GameScene2.sks */,
 				95C924711CD52FCD0009DDE5 /* GameScene.swift */,
@@ -170,7 +171,6 @@
 				959ECFE61CD65C7600494D9E /* Boundary.swift */,
 				959ECFEC1CD68B1500494D9E /* Star.swift */,
 				95EF49FB1CD7C9DF00314914 /* Enemy.swift */,
-				957A8E1E1CD9433900990AD3 /* GameData.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";

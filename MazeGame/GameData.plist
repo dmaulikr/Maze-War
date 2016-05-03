@@ -41,8 +41,8 @@
 			<key>EnemySpeed</key>
 			<integer>2</integer>
 			<key>EnemyLogic</key>
-			<integer>2</integer>
-			<key>BackGround</key>
+			<integer>5</integer>
+			<key>Background</key>
 			<string>star_field</string>
 		</dict>
 		<dict>

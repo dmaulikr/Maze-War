@@ -12,3 +12,8 @@ var livesLeft:Int = 3
 var currentLevel:Int = 0
 var firstSKSFile:String = "GameScene"
 var currentSKSFile:String = firstSKSFile
+var useTMXFiles:Bool = false
+var currentTMXFile:String?
+var nextSKSFile:String?
+var bgImage:String?
+var enemyLogic:Double = 0
