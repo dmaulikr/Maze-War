@@ -31,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var heroLocation:CGPoint = CGPointZero
     var mazeWorld:SKNode?
     var hero:Hero?
-    var useTMXFiles:Bool = true
+    var useTMXFiles:Bool = false
     var heroIsDead:Bool = false
     var starAquired:Int = 0
     var starsTotal:Int = 0
@@ -46,8 +46,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist")
         let dict = NSDictionary(contentsOfFile: path!)!
-        let heroDict:AnyObject = dict.objectForKey("HeroSettings")!
-
+        let heroDict:NSDictionary = dict.objectForKey("HeroSettings")! as! NSDictionary
+        let gameDict:NSDictionary = dict.objectForKey("GameSettings")! as! NSDictionary
+        
+        print(gameDict)
   
         /* Setup your scene here */
         // set our delegates that the class conforms to
@@ -56,17 +58,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         // set background colour of our view
         self.backgroundColor = SKColor.blackColor()
         //show physics bodies
-        view.showsPhysics = false
+        view.showsPhysics = gameDict["ShowPhysics"] as! Bool
         
-        // set gravity to zero for now
-        self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        if (gameDict["Gravity"] != nil) {
+            print("gravity activated")
+            let newGravity:CGPoint = CGPointFromString(gameDict["Gravity"] as! String)
+            physicsWorld.gravity = CGVector(dx: newGravity.x, dy: newGravity.y)
+            
+        }else {
         
+            // set gravity to zero for now
+            physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        }
         
         // set the anchor point of the maze
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         
         /* Use TMX File */
+        
+        useTMXFiles = gameDict["UseTMXFile"] as! Bool
+        
         if (useTMXFiles == true) {
             self.enumerateChildNodesWithName("*") {
                 node, stop in
