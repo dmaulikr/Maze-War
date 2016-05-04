@@ -551,6 +551,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func  resetEnemies() {
         
+        currentLevel++
+        
         for (name, location) in enemyDict {
             
             mazeWorld!.childNodeWithName(name)?.position = location
@@ -559,6 +561,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     
+    func loadNExtLEvel() {
+    
+    if ( useTMXFiles == true) {
+    
+        loadNextTMXLevel()
+    
+    }else {
+        
+            loadNextSKSLevel()
+        }
+    
+    }
+    
+    
+    func loadNextTMXLevel() {
+        
+        let scene:GameScene = GameScene(size: self.size)
+        scene.scaleMode = .AspectFill
+        
+        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(1) )
+        
+    }
+    
+    
+    func loadNextSKSLevel() {
+        
+        currentSKSFile = nextSKSFile!
+        
+        let scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
+        scene!.scaleMode = .AspectFill
+        
+        self.view?.presentScene(scene!, transition: SKTransition.fadeWithDuration(1))
+        
+        
+    }
     
     
     
