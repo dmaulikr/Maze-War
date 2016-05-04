@@ -10,15 +10,7 @@ import Foundation
 import SpriteKit
 
 
-enum HeroIs {
-    
-    case Southwest, Southeast, Northwest, Northeast
-}
 
-enum EnemyDirection {
-    
-    case Up, Down, Left, Right
-}
 
 class Enemy: SKNode {
     

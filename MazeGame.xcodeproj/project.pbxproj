@@ -164,9 +164,6 @@
 			children = (
 				957A8E1C1CD89DF300990AD3 /* GameData.plist */,
 				957A8E1E1CD9433900990AD3 /* GameData.swift */,
-				95C9246F1CD52FCD0009DDE5 /* GameScene.sks */,
-				957A8E201CD944FE00990AD3 /* GameScene2.sks */,
-				95C924711CD52FCD0009DDE5 /* GameScene.swift */,
 				95C924A81CD538E10009DDE5 /* Hero.swift */,
 				959ECFE61CD65C7600494D9E /* Boundary.swift */,
 				959ECFEC1CD68B1500494D9E /* Star.swift */,
@@ -178,6 +175,8 @@
 		95C924A11CD5301F0009DDE5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				95C9246F1CD52FCD0009DDE5 /* GameScene.sks */,
+				957A8E201CD944FE00990AD3 /* GameScene2.sks */,
 				95C924751CD52FCD0009DDE5 /* Main.storyboard */,
 				95C9247A1CD52FCD0009DDE5 /* LaunchScreen.storyboard */,
 			);
@@ -187,6 +186,7 @@
 		95C924A31CD5303C0009DDE5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				95C924711CD52FCD0009DDE5 /* GameScene.swift */,
 				95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */,
 				95C924731CD52FCD0009DDE5 /* GameViewController.swift */,
 			);

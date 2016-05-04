@@ -9,13 +9,7 @@
 import Foundation
 import SpriteKit
 
-enum Direction {
-    case Up, Down, Right, Left, None
-}
 
-enum DesiredDirection {
-    case Up, Down, Right, Left, None
-}
 
 
 class Hero: SKNode {

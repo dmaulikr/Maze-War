@@ -8,18 +8,18 @@
 
 import SpriteKit
 
-enum BodyType:UInt32 {
-    
-    case hero = 1
-    case boundary = 2
-    case sensorUp = 4
-    case sensorDown = 8
-    case sensorRight = 16
-    case sensorLeft = 32
-    case star = 64
-    case enemy = 128
-    case boundary2 = 256
-}
+//enum BodyType:UInt32 {
+//    
+//    case hero = 1
+//    case boundary = 2
+//    case sensorUp = 4
+//    case sensorDown = 8
+//    case sensorRight = 16
+//    case sensorLeft = 32
+//    case star = 64
+//    case enemy = 128
+//    case boundary2 = 256
+//}
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
@@ -561,7 +561,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     
-    func loadNExtLEvel() {
+    func loadNextLevel() {
     
     if ( useTMXFiles == true) {
     

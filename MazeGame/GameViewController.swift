@@ -31,7 +31,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let scene = GameScene(fileNamed: currentSKSFile) {
+        if let scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene {
             // Configure the view.
             let skView = self.view as! SKView
             skView.showsFPS = true
