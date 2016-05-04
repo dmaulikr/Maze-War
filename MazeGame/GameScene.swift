@@ -429,6 +429,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
             starAquired++
             
+            if( starAquired == starsTotal ) {
+                
+                loadNextLevel()
+            }
             
            
             
@@ -544,6 +548,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func reloadLevel() {
         
+        
+        loseLife()
         heroIsDead = true
         
     }
@@ -597,7 +603,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
     }
     
+    func loseLife() {
+        
+        livesLeft = livesLeft - 1
+        
+        if(livesLeft == 0) {
+            
+            let scaleAction:SKAction = SKAction.scaleTo(0.2, duration: 3.0)
+            let fadeAction:SKAction = SKAction.fadeAlphaTo(0, duration: 1.0)
+            let seqAction:SKAction = SKAction.group([fadeAction, scaleAction])
+            
+            mazeWorld!.runAction(seqAction, completion: {
+                
+                self.resetGame()
+            } )
+            
+        }else {
+            
+            // lives left label
+            
+        }
+        
+    }
     
+    
+    func resetGame() {
+        
+        livesLeft = 3
+        currentLevel = 0
+        
+        if( useTMXFiles == true) {
+            
+            loadNextTMXLevel()
+            
+        }else {
+            
+            currentSKSFile = firstSKSFile
+            let scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
+            scene!.scaleMode = .AspectFill
+            
+            self.view?.presentScene(scene!, transition: SKTransition.fadeWithDuration(1))
+
+        }
+        
+    }
     
     
 }//end of class
