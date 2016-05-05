@@ -38,7 +38,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var enemyDict:[String : CGPoint] = [:]
     var enemySpeed:Float = 2
     var gameLabel:SKLabelNode?
-    
+    var parallaxBG:SKSpriteNode?
+    var parallaxOffset:CGPoint = CGPointZero
     
     
     // MARK: Overide Functions
@@ -88,7 +89,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
         
-//        print(levelArray)
   
         /* Setup your scene here */
         // set our delegates that the class conforms to
@@ -96,6 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         // set background colour of our view
         self.backgroundColor = SKColor.blackColor()
+        
         //show physics bodies
         view.showsPhysics = gameDict["ShowPhysics"] as! Bool
         
@@ -107,6 +108,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
             // set gravity to zero for now
             physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        }
+        
+        // background Stuff
+        
+        if (gameDict["ParallaxOffset"] != nil) {
+            
+            parallaxOffset = CGPointFromString( (gameDict["ParallaxOffset"] as? String)! )
+            
         }
         
         // set the anchor point of the maze
@@ -138,6 +147,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         hero!.position = heroLocation
         mazeWorld?.addChild(hero!)
         hero?.currentSpeed = currentSpeed
+        
+        if(bgImage != nil) {
+            
+            createBackground(bgImage!)
+        }
+        
         
         let waitAction: SKAction = SKAction.waitForDuration(0.5)
         self.runAction(waitAction, completion: {
@@ -472,7 +487,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         let cameraPositionInScene:CGPoint = self.convertPoint(node.position, fromNode: mazeWorld!)
         mazeWorld!.position = CGPoint(x: mazeWorld!.position.x - cameraPositionInScene.x, y: mazeWorld!.position.y - cameraPositionInScene.y)
         
+        if(parallaxOffset.x != 0) {
+           
+            if(Int(cameraPositionInScene.x) < 0 ) {
+                
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x + parallaxOffset.x, y: parallaxBG!.position.y)
+                
+            }else if(Int(cameraPositionInScene.x) > 0 ) {
+            
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x - parallaxOffset.x, y: parallaxBG!.position.y)
+                
+            }
+            
+        }
         
+        if(parallaxOffset.y != 0) {
+            
+            if(Int(cameraPositionInScene.y) < 0 ) {
+                
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x , y: parallaxBG!.position.y + parallaxOffset.y)
+                
+            }else if(Int(cameraPositionInScene.x) > 0 ) {
+                
+                parallaxBG!.position = CGPoint(x: parallaxBG!.position.x , y: parallaxBG!.position.y - parallaxOffset.y)
+                
+            }
+            
+        }
         
     }
     
@@ -674,5 +715,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
     }
+    
+    
+    
+    func createBackground(image:String) {
+        
+        parallaxBG = SKSpriteNode(imageNamed: image)
+        mazeWorld!.addChild(parallaxBG!)
+        parallaxBG!.position = CGPoint(x: parallaxBG!.size.width / 2, y: -parallaxBG!.size.height / 2)
+        parallaxBG!.alpha = 0.5
+        
+    }
+    
+    
+    
+    
+    
     
 }//end of class
