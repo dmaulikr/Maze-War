@@ -10,6 +10,9 @@
 		957A8E1D1CD89DF300990AD3 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 957A8E1C1CD89DF300990AD3 /* GameData.plist */; };
 		957A8E1F1CD9433900990AD3 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957A8E1E1CD9433900990AD3 /* GameData.swift */; };
 		957A8E211CD944FE00990AD3 /* GameScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 957A8E201CD944FE00990AD3 /* GameScene2.sks */; };
+		959183111CDBF18A005CC2C3 /* collect_something.caf in Resources */ = {isa = PBXBuildFile; fileRef = 959183101CDBF18A005CC2C3 /* collect_something.caf */; };
+		959183131CDBF21B005CC2C3 /* levelsound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 959183121CDBF21B005CC2C3 /* levelsound.mp3 */; };
+		959183151CDBF228005CC2C3 /* endgame.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 959183141CDBF228005CC2C3 /* endgame.mp3 */; };
 		959ECFE71CD65C7600494D9E /* Boundary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959ECFE61CD65C7600494D9E /* Boundary.swift */; };
 		959ECFE91CD66D7F00494D9E /* Maze.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 959ECFE81CD66D7F00494D9E /* Maze.tmx */; };
 		959ECFED1CD68B1500494D9E /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959ECFEC1CD68B1500494D9E /* Star.swift */; };
@@ -49,6 +52,9 @@
 		957A8E1C1CD89DF300990AD3 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		957A8E1E1CD9433900990AD3 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		957A8E201CD944FE00990AD3 /* GameScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene2.sks; sourceTree = "<group>"; };
+		959183101CDBF18A005CC2C3 /* collect_something.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = collect_something.caf; sourceTree = "<group>"; };
+		959183121CDBF21B005CC2C3 /* levelsound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = levelsound.mp3; sourceTree = "<group>"; };
+		959183141CDBF228005CC2C3 /* endgame.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = endgame.mp3; sourceTree = "<group>"; };
 		959ECFE61CD65C7600494D9E /* Boundary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Boundary.swift; sourceTree = "<group>"; };
 		959ECFE81CD66D7F00494D9E /* Maze.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Maze.tmx; sourceTree = "<group>"; };
 		959ECFEC1CD68B1500494D9E /* Star.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
@@ -151,6 +157,9 @@
 		95C9249F1CD52FF50009DDE5 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				959183141CDBF228005CC2C3 /* endgame.mp3 */,
+				959183101CDBF18A005CC2C3 /* collect_something.caf */,
+				959183121CDBF21B005CC2C3 /* levelsound.mp3 */,
 				959ECFE81CD66D7F00494D9E /* Maze.tmx */,
 				95C924A61CD5321F0009DDE5 /* BMgermar.TTF */,
 				95C924A41CD5315C0009DDE5 /* moving.atlas */,
@@ -299,11 +308,14 @@
 			files = (
 				95C924701CD52FCD0009DDE5 /* GameScene.sks in Resources */,
 				959ECFE91CD66D7F00494D9E /* Maze.tmx in Resources */,
+				959183111CDBF18A005CC2C3 /* collect_something.caf in Resources */,
 				95C9247C1CD52FCD0009DDE5 /* LaunchScreen.storyboard in Resources */,
 				95C924791CD52FCD0009DDE5 /* Assets.xcassets in Resources */,
 				957A8E1D1CD89DF300990AD3 /* GameData.plist in Resources */,
+				959183151CDBF228005CC2C3 /* endgame.mp3 in Resources */,
 				95C924A51CD5315C0009DDE5 /* moving.atlas in Resources */,
 				95C924771CD52FCD0009DDE5 /* Main.storyboard in Resources */,
+				959183131CDBF21B005CC2C3 /* levelsound.mp3 in Resources */,
 				95C924A71CD5321F0009DDE5 /* BMgermar.TTF in Resources */,
 				957A8E211CD944FE00990AD3 /* GameScene2.sks in Resources */,
 			);

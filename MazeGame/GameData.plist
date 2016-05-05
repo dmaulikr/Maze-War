@@ -46,6 +46,8 @@
 			<integer>5</integer>
 			<key>Background</key>
 			<string>star_field</string>
+			<key>Music</key>
+			<string>levelsound</string>
 		</dict>
 		<dict>
 			<key>TMXFile</key>

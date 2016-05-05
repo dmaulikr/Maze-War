@@ -7,19 +7,7 @@
 //
 
 import SpriteKit
-
-//enum BodyType:UInt32 {
-//    
-//    case hero = 1
-//    case boundary = 2
-//    case sensorUp = 4
-//    case sensorDown = 8
-//    case sensorRight = 16
-//    case sensorLeft = 32
-//    case star = 64
-//    case enemy = 128
-//    case boundary2 = 256
-//}
+import AVFoundation
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
@@ -40,7 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var gameLabel:SKLabelNode?
     var parallaxBG:SKSpriteNode?
     var parallaxOffset:CGPoint = CGPointZero
-    
+    var bgSoundPlayer:AVAudioPlayer?
     
     // MARK: Overide Functions
     
@@ -85,6 +73,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         if let logic = levelDict["EnemyLogic"] as? Double {
             
             enemyLogic = logic
+            
+        }
+        
+        if let musicFile = levelDict["Music"] as? String {
+            
+             playBackgroundSound(musicFile)
             
         }
         
@@ -434,6 +428,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         case BodyType.hero.rawValue | BodyType.star.rawValue :
             
+            let collectSound:SKAction = SKAction.playSoundFileNamed("collect_something.caf", waitForCompletion: false)
+            self.runAction(collectSound)
+            
             if let star = contact.bodyA.node as? Star {
                 
                 star.removeFromParent()
@@ -612,6 +609,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func loadNextLevel() {
     
+    if (bgSoundPlayer != nil) {
+            
+        bgSoundPlayer!.stop()
+        bgSoundPlayer = nil
+            
+    }
+
+        
+        
     if ( useTMXFiles == true) {
     
         loadNextTMXLevel()
@@ -655,6 +661,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             gameLabel!.text = "Game Over"
             gameLabel!.position = CGPointZero
             gameLabel!.horizontalAlignmentMode = .Center
+            
+            playBackgroundSound("endgame")
+            
             let scaleAction:SKAction = SKAction.scaleTo(0.2, duration: 3.0)
             let fadeAction:SKAction = SKAction.fadeOutWithDuration(2)
             let seqAction:SKAction = SKAction.group([fadeAction, scaleAction])
@@ -677,6 +686,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         livesLeft = 3
         currentLevel = 0
+        
+        
+        if (bgSoundPlayer != nil) {
+            
+            bgSoundPlayer!.stop()
+            bgSoundPlayer = nil
+            
+        }
+
+        
         
         if( useTMXFiles == true) {
             
@@ -728,7 +747,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     
-    
+    func playBackgroundSound(Sound:String) {
+        
+        
+        if (bgSoundPlayer != nil) {
+            
+            bgSoundPlayer!.stop()
+            bgSoundPlayer = nil
+            
+        }
+        
+        
+        let fileURL:NSURL = NSBundle.mainBundle().URLForResource( Sound, withExtension: "mp3" )!
+        
+        do {
+        
+                bgSoundPlayer = try AVAudioPlayer(contentsOfURL: fileURL)
+            
+        }catch {
+            
+            bgSoundPlayer = nil
+            
+        }
+        
+        bgSoundPlayer!.volume = 0.5  //half volume
+        bgSoundPlayer!.numberOfLoops = -1
+        bgSoundPlayer!.prepareToPlay()
+        bgSoundPlayer!.play()
+
+        
+    }
     
     
     
