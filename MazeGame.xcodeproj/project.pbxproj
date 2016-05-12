@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		952E2C2B1CE238A000FE368F /* gameOverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952E2C2A1CE238A000FE368F /* gameOverVC.swift */; };
+		9548CC0D1CE12C4D0013D983 /* StartScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9548CC0C1CE12C4D0013D983 /* StartScreenVC.swift */; };
 		957A8E1D1CD89DF300990AD3 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 957A8E1C1CD89DF300990AD3 /* GameData.plist */; };
 		957A8E1F1CD9433900990AD3 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 957A8E1E1CD9433900990AD3 /* GameData.swift */; };
 		957A8E211CD944FE00990AD3 /* GameScene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 957A8E201CD944FE00990AD3 /* GameScene2.sks */; };
@@ -49,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		952E2C2A1CE238A000FE368F /* gameOverVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = gameOverVC.swift; sourceTree = "<group>"; };
+		9548CC0C1CE12C4D0013D983 /* StartScreenVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartScreenVC.swift; sourceTree = "<group>"; };
 		957A8E1C1CD89DF300990AD3 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		957A8E1E1CD9433900990AD3 /* GameData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		957A8E201CD944FE00990AD3 /* GameScene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene2.sks; sourceTree = "<group>"; };
@@ -198,6 +202,8 @@
 				95C924711CD52FCD0009DDE5 /* GameScene.swift */,
 				95C9246D1CD52FCC0009DDE5 /* AppDelegate.swift */,
 				95C924731CD52FCD0009DDE5 /* GameViewController.swift */,
+				9548CC0C1CE12C4D0013D983 /* StartScreenVC.swift */,
+				952E2C2A1CE238A000FE368F /* gameOverVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -342,10 +348,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				952E2C2B1CE238A000FE368F /* gameOverVC.swift in Sources */,
 				95EF49FC1CD7C9DF00314914 /* Enemy.swift in Sources */,
 				95C924721CD52FCD0009DDE5 /* GameScene.swift in Sources */,
 				95C924741CD52FCD0009DDE5 /* GameViewController.swift in Sources */,
 				95C9246E1CD52FCC0009DDE5 /* AppDelegate.swift in Sources */,
+				9548CC0D1CE12C4D0013D983 /* StartScreenVC.swift in Sources */,
 				959ECFED1CD68B1500494D9E /* Star.swift in Sources */,
 				957A8E1F1CD9433900990AD3 /* GameData.swift in Sources */,
 				95C924A91CD538E10009DDE5 /* Hero.swift in Sources */,
@@ -492,10 +500,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MazeGame/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.Redih.MazeGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -504,10 +513,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MazeGame/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.Redih.MazeGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

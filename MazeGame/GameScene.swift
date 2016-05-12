@@ -8,6 +8,7 @@
 
 import SpriteKit
 import AVFoundation
+import UIKit
 
 
 class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
@@ -29,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var parallaxBG:SKSpriteNode?
     var parallaxOffset:CGPoint = CGPointZero
     var bgSoundPlayer:AVAudioPlayer?
+    var viewController: UIViewController?
     
     // MARK: Overide Functions
     
@@ -233,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }
     }
-    // center the maze node on teh hero
+    // center the maze node on the hero
     override func didSimulatePhysics() {
         
         if (heroIsDead == false) {
@@ -486,13 +488,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         if(parallaxOffset.x != 0) {
            
-            if(Int(cameraPositionInScene.x) < 0 ) {
+            if( Int(cameraPositionInScene.x) < 0 ) {
                 
                 parallaxBG!.position = CGPoint(x: parallaxBG!.position.x + parallaxOffset.x, y: parallaxBG!.position.y)
+               
                 
-            }else if(Int(cameraPositionInScene.x) > 0 ) {
+            }else if( Int(cameraPositionInScene.x) > 0 ) {
             
                 parallaxBG!.position = CGPoint(x: parallaxBG!.position.x - parallaxOffset.x, y: parallaxBG!.position.y)
+                
+
                 
             }
             
@@ -500,13 +505,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         if(parallaxOffset.y != 0) {
             
-            if(Int(cameraPositionInScene.y) < 0 ) {
+            if( Int(cameraPositionInScene.y) < 0 ) {
                 
                 parallaxBG!.position = CGPoint(x: parallaxBG!.position.x , y: parallaxBG!.position.y + parallaxOffset.y)
+             
+
                 
-            }else if(Int(cameraPositionInScene.x) > 0 ) {
+            }else if( Int(cameraPositionInScene.y) > 0 ) {
                 
                 parallaxBG!.position = CGPoint(x: parallaxBG!.position.x , y: parallaxBG!.position.y - parallaxOffset.y)
+               
+
                 
             }
             
@@ -597,7 +606,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func  resetEnemies() {
         
-        currentLevel++
+        
         
         for (name, location) in enemyDict {
             
@@ -609,23 +618,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func loadNextLevel() {
     
-    if (bgSoundPlayer != nil) {
+        if (bgSoundPlayer != nil) {
             
-        bgSoundPlayer!.stop()
-        bgSoundPlayer = nil
+            bgSoundPlayer!.stop()
+            bgSoundPlayer = nil
             
-    }
+        }
 
+        currentLevel++
         
         
-    if ( useTMXFiles == true) {
+        
+        
+        if ( useTMXFiles == true) {
     
-        loadNextTMXLevel()
+            loadNextTMXLevel()
     
-    }else {
+        }else {
         
             loadNextSKSLevel()
-        }
+            }
     
     }
     
@@ -695,21 +707,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }
 
+       self.viewController!.performSegueWithIdentifier("gameOver" , sender: nil)
         
-        
-        if( useTMXFiles == true) {
-            
-            loadNextTMXLevel()
-            
-        }else {
-            
-            currentSKSFile = firstSKSFile
-            let scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
-            scene!.scaleMode = .AspectFill
-            
-            self.view?.presentScene(scene!, transition: SKTransition.fadeWithDuration(1))
-
-        }
+//        if( useTMXFiles == true) {
+//            
+//            loadNextTMXLevel()
+//            
+//        }else {
+//            
+//            currentSKSFile = firstSKSFile
+//            let scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
+//            scene!.scaleMode = .AspectFill
+//            
+//            self.view?.presentScene(scene!, transition: SKTransition.fadeWithDuration(1))
+//
+//        }
         
     }
     
@@ -741,7 +753,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         parallaxBG = SKSpriteNode(imageNamed: image)
         mazeWorld!.addChild(parallaxBG!)
-        parallaxBG!.position = CGPoint(x: parallaxBG!.size.width / 2, y: -parallaxBG!.size.height / 2)
+        parallaxBG!.position = CGPoint(x: parallaxBG!.size.width , y: -parallaxBG!.size.height / 2)
         parallaxBG!.alpha = 0.5
         
     }
