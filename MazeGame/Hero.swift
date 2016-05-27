@@ -326,7 +326,7 @@ class Hero: SKNode {
             
         }else {
             
-            size = CGSize(width: 32.4, height: 36)
+            size = CGSize(width: 34, height: 36)
         }
         
         nodeUp!.physicsBody = nil // get rid of any body
@@ -349,7 +349,7 @@ class Hero: SKNode {
             size = CGSize(width: 32, height: 4)
         } else {
             
-            size = CGSize(width: 32.4 , height:36 )
+            size = CGSize(width: 34 , height:36 )
         }
         
         
@@ -375,7 +375,7 @@ class Hero: SKNode {
             size = CGSize(width: 4, height: 32)
         } else {
             
-            size = CGSize(width: 36, height: 32.4)
+            size = CGSize(width: 36, height: 34)
         }
         
         
@@ -403,7 +403,7 @@ class Hero: SKNode {
             size = CGSize(width: 4, height: 32)
         } else {
             
-            size = CGSize(width: 36, height: 32.4)
+            size = CGSize(width: 36, height: 34)
         }
         
         
