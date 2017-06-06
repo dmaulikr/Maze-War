@@ -82,7 +82,7 @@ class Hero: SKNode {
             
        if let atlasName:String = heroDict["MovingAtlasFile"] as? String {
                 
-          if let frameArray:NSArray = (heroDict["MovingFrames"] as? NSArray)! {
+          if let frameArray:NSArray = (heroDict["MovingFrames"] as? NSArray) {
                     
                     setUpAnimationWithArray(frameArray, andAtlasNamed: atlasName)
                     runAnimation()
@@ -486,7 +486,7 @@ class Hero: SKNode {
         if (desiredDirection == DesiredDirection.up) {
             
             goUp()
-            desiredDirection  == DesiredDirection.none
+            desiredDirection  = DesiredDirection.none
         }
     }
 
@@ -497,7 +497,7 @@ class Hero: SKNode {
         if (desiredDirection == DesiredDirection.down) {
             
             goDown()
-            desiredDirection  == DesiredDirection.none
+            desiredDirection  = DesiredDirection.none
         }
         
     }
@@ -509,7 +509,7 @@ class Hero: SKNode {
         if (desiredDirection == DesiredDirection.right) {
             
             goRight()
-            desiredDirection  == DesiredDirection.none
+            desiredDirection  = DesiredDirection.none
         }
         
     }
@@ -521,7 +521,7 @@ class Hero: SKNode {
         if (desiredDirection == DesiredDirection.left) {
             
             goLeft()
-            desiredDirection  == DesiredDirection.none
+            desiredDirection  = DesiredDirection.none
         }
         
     }

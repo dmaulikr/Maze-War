@@ -276,6 +276,7 @@
 				TargetAttributes = {
 					95C924691CD52FCC0009DDE5 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = BU6VSYPS76;
 						LastSwiftMigration = 0820;
 					};
 					95C924811CD52FCD0009DDE5 = {
@@ -507,6 +508,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BU6VSYPS76;
 				INFOPLIST_FILE = MazeGame/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -521,6 +523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BU6VSYPS76;
 				INFOPLIST_FILE = MazeGame/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
