@@ -58,7 +58,7 @@ class Boundary: SKNode {
         let size: CGSize = CGSize(width: width, height: height)
         
         self.position = CGPoint(x: location.x + (size.width / 2), y: location.y - (size.height / 2))
-        let rect: CGRect = CGRectMake(-(size.width / 2), -(size.height / 2), size.width, size.height)
+        let rect: CGRect = CGRect(x: -(size.width / 2), y: -(size.height / 2), width: size.width, height: size.height)
         
         createBoundary(rect, createAsEdge: isEdge)
     }
@@ -66,26 +66,26 @@ class Boundary: SKNode {
     
     // MARK: Functions
     
-    func createBoundary(rect: CGRect, createAsEdge: Bool) {
+    func createBoundary(_ rect: CGRect, createAsEdge: Bool) {
         
         let shape = SKShapeNode(rect: rect, cornerRadius: 19)
-        shape.fillColor = SKColor.clearColor()
-        shape.strokeColor = SKColor.whiteColor()
+        shape.fillColor = SKColor.clear
+        shape.strokeColor = SKColor.white
         shape.lineWidth = 1
         
         addChild(shape)
         
         if (createAsEdge == false) {
             
-            self.physicsBody = SKPhysicsBody(rectangleOfSize: rect.size)
+            self.physicsBody = SKPhysicsBody(rectangleOf: rect.size)
             
         }else {
             
-            self.physicsBody = SKPhysicsBody(edgeLoopFromRect: rect)
+            self.physicsBody = SKPhysicsBody(edgeLoopFrom: rect)
         }
         
         
-        self.physicsBody!.dynamic = false
+        self.physicsBody!.isDynamic = false
         self.physicsBody!.categoryBitMask = BodyType.boundary.rawValue
         self.physicsBody!.friction = 0
         self.physicsBody!.allowsRotation = false

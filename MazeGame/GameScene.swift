@@ -11,13 +11,13 @@ import AVFoundation
 import UIKit
 
 
-class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
+class GameScene: SKScene, SKPhysicsContactDelegate, XMLParserDelegate {
     
     // MARK: VARS
    
     // Game Variables should be in a singleton
     var currentSpeed:Float = 2
-    var heroLocation:CGPoint = CGPointZero
+    var heroLocation:CGPoint = CGPoint.zero
     var mazeWorld:SKNode?
     var hero:Hero?
     var heroIsDead:Bool = false
@@ -28,21 +28,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     var enemySpeed:Float = 2
     var gameLabel:SKLabelNode?
     var parallaxBG:SKSpriteNode?
-    var parallaxOffset:CGPoint = CGPointZero
+    var parallaxOffset:CGPoint = CGPoint.zero
     var bgSoundPlayer:AVAudioPlayer?
     var viewController: UIViewController?
     
     // MARK: Overide Functions
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
        
         /* Parse Property List */
         
-        let path = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist")
+        let path = Bundle.main.path(forResource: "GameData", ofType: "plist")
         let dict = NSDictionary(contentsOfFile: path!)!
-        let heroDict:NSDictionary = dict.objectForKey("HeroSettings")! as! NSDictionary
-        let gameDict:NSDictionary = dict.objectForKey("GameSettings")! as! NSDictionary
-        let levelArray:NSArray = dict.objectForKey("LevelSettings")! as! NSArray
+        let heroDict:NSDictionary = dict.object(forKey: "HeroSettings")! as! NSDictionary
+        let gameDict:NSDictionary = dict.object(forKey: "GameSettings")! as! NSDictionary
+        let levelArray:NSArray = dict.object(forKey: "LevelSettings")! as! NSArray
         let levelDict:NSDictionary = levelArray[currentLevel] as! NSDictionary
         
         if let tmxFile = levelDict["TMXFile"] as? String {
@@ -91,7 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         physicsWorld.contactDelegate = self
         
         // set background colour of our view
-        self.backgroundColor = SKColor.blackColor()
+        self.backgroundColor = SKColor.black
         
         //show physics bodies
         view.showsPhysics = gameDict["ShowPhysics"] as! Bool
@@ -123,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         useTMXFiles = gameDict["UseTMXFile"] as! Bool
         
         if (useTMXFiles == true) {
-            self.enumerateChildNodesWithName("*") {
+            self.enumerateChildNodes(withName: "*") {
                 node, stop in
             
                 node.removeFromParent()
@@ -133,8 +133,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }else {
             
-            mazeWorld = childNodeWithName("mazeWorld")
-            heroLocation = mazeWorld!.childNodeWithName("startingPoint")!.position
+            mazeWorld = childNode(withName: "mazeWorld")
+            heroLocation = mazeWorld!.childNode(withName: "startingPoint")!.position
 
         }
         
@@ -150,23 +150,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
         
-        let waitAction: SKAction = SKAction.waitForDuration(0.5)
-        self.runAction(waitAction, completion: {
+        let waitAction: SKAction = SKAction.wait(forDuration: 0.5)
+        self.run(waitAction, completion: {
             
-            let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedRight:") )
-            swipeRight.direction = .Right
+            let swipeRight: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedRight(_:)) )
+            swipeRight.direction = .right
             view.addGestureRecognizer(swipeRight)
             
-            let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedLeft:") )
-            swipeLeft.direction = .Left
+            let swipeLeft: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedLeft(_:)) )
+            swipeLeft.direction = .left
             view.addGestureRecognizer(swipeLeft)
             
-            let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedUp:") )
-            swipeUp.direction = .Up
+            let swipeUp: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedUp(_:)) )
+            swipeUp.direction = .up
             view.addGestureRecognizer(swipeUp)
             
-            let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("swipedDown:") )
-            swipeDown.direction = .Down
+            let swipeDown: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(GameScene.swipedDown(_:)) )
+            swipeDown.direction = .down
             view.addGestureRecognizer(swipeDown)
         })
         
@@ -188,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         createLabel()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        /* Called when a touch begins */
         
 //        for touch in touches {
@@ -199,14 +199,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
    
     // updates the hero position
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
         
         if (heroIsDead == false) {
         
             hero?.update()
         
-            mazeWorld!.enumerateChildNodesWithName("enemy*") {
+            mazeWorld!.enumerateChildNodes(withName: "enemy*") {
                 node, stop in
             
                 if let enemy = node as? Enemy {
@@ -228,8 +228,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             hero!.rightBlocked = false
             hero!.position = heroLocation
             heroIsDead = false
-            hero!.currentDirection = .Right
-            hero!.desiredDirection = .None
+            hero!.currentDirection = .right
+            hero!.desiredDirection = .none
             hero!.goRight()
             hero!.runAnimation()
             
@@ -252,17 +252,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     
     // gets the path of the tmx file and sets up the parser
-    func parseTMXFileWithName(name: String) {
+    func parseTMXFileWithName(_ name: String) {
         
-        let path:String = NSBundle.mainBundle().pathForResource(name, ofType: "tmx")!
-        let data:NSData = NSData(contentsOfFile: path)!
-        let parser:NSXMLParser = NSXMLParser(data: data)
+        let path:String = Bundle.main.path(forResource: name, ofType: "tmx")!
+        let data:Data = try! Data(contentsOf: URL(fileURLWithPath: path))
+        let parser:XMLParser = XMLParser(data: data)
         
         parser.delegate = self
         parser.parse()
     }
     //this parses the tmx file and sets teh positions of the boundaries and other game items
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
         if (elementName == "object") {
             let type:String = attributeDict["type"]!
@@ -287,7 +287,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
                 let newStar:Star = Star(fromTMXFileWithDict: attributeDict)
                 mazeWorld?.addChild(newStar)
-                starsTotal++
+                starsTotal += 1
 
             }else if ( type == "Portal") {
                 
@@ -305,7 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 }
             }else if (type == "Enemy") {
                 
-                enemyCount++
+                enemyCount += 1
                 let theName:String = attributeDict["name"]!
                 let newEnemy:Enemy = Enemy(fromTMXFileWithDict: attributeDict)
                 mazeWorld!.addChild(newEnemy)
@@ -328,7 +328,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     // set boudaries from sks file if used
     func setUpBoundaryFromSKS() {
        
-        mazeWorld?.enumerateChildNodesWithName("boundary") {
+        mazeWorld?.enumerateChildNodes(withName: "boundary") {
             node, stop in
             
             if let boundary = node as? SKSpriteNode {
@@ -347,7 +347,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func setUpEdgeFromSKS() {
         
-        mazeWorld?.enumerateChildNodesWithName("edge") {
+        mazeWorld?.enumerateChildNodes(withName: "edge") {
             node, stop in
             
             if let edge = node as? SKSpriteNode {
@@ -367,7 +367,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     // set up starts from sks file
     func setUpStarsFromSKS() {
-        mazeWorld!.enumerateChildNodesWithName("star") {
+        mazeWorld!.enumerateChildNodes(withName: "star") {
             node, stop in
             
             if let star = node as? SKSpriteNode {
@@ -376,7 +376,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 self.mazeWorld!.addChild(newStar)
                 newStar.position = star.position
                 
-                self.starsTotal++
+                self.starsTotal += 1
                 
                 star.removeFromParent()
                 
@@ -385,29 +385,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     // swipe control functions
-    func swipedRight(sender: UISwipeGestureRecognizer) {
+    func swipedRight(_ sender: UISwipeGestureRecognizer) {
         
         hero?.goRight()
     }
     
-    func swipedLeft(sender: UISwipeGestureRecognizer) {
+    func swipedLeft(_ sender: UISwipeGestureRecognizer) {
         
         hero?.goLeft()
     }
     
-    func swipedUp(sender: UISwipeGestureRecognizer) {
+    func swipedUp(_ sender: UISwipeGestureRecognizer) {
         
         hero?.goUp()
     }
     
-    func swipedDown(sender: UISwipeGestureRecognizer) {
+    func swipedDown(_ sender: UISwipeGestureRecognizer) {
         
         hero?.goDown()
     }
     
     // MARK: Collision Functions
     
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
         
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
@@ -431,7 +431,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         case BodyType.hero.rawValue | BodyType.star.rawValue :
             
             let collectSound:SKAction = SKAction.playSoundFileNamed("collect_something.caf", waitForCompletion: false)
-            self.runAction(collectSound)
+            self.run(collectSound)
             
             if let star = contact.bodyA.node as? Star {
                 
@@ -443,7 +443,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
                 
             }
             
-            starAquired++
+            starAquired += 1
             
             if( starAquired == starsTotal ) {
                 
@@ -457,7 +457,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
     }
     
-    func didEndContact(contact: SKPhysicsContact) {
+    func didEnd(_ contact: SKPhysicsContact) {
         
           let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
@@ -481,9 +481,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     
-    func centerOnNode(node: SKNode) {
+    func centerOnNode(_ node: SKNode) {
         
-        let cameraPositionInScene:CGPoint = self.convertPoint(node.position, fromNode: mazeWorld!)
+        let cameraPositionInScene:CGPoint = self.convert(node.position, from: mazeWorld!)
         mazeWorld!.position = CGPoint(x: mazeWorld!.position.x - cameraPositionInScene.x, y: mazeWorld!.position.y - cameraPositionInScene.y)
         
         if(parallaxOffset.x != 0) {
@@ -527,12 +527,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func setupEnemiesFromSKS() {
         
-        mazeWorld?.enumerateChildNodesWithName("enemy*") {
+        mazeWorld?.enumerateChildNodes(withName: "enemy*") {
             node, stop in
             
             if let enemy = node as? SKSpriteNode {
                 
-                self.enemyCount++
+                self.enemyCount += 1
                 
                 let newEnemy:Enemy = Enemy(fromSKSWithImage: enemy.name!)
                 self.mazeWorld!.addChild(newEnemy)
@@ -552,12 +552,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     func tellEnemiesWhereHeroIs() {
         
-        let enemyAction:SKAction = SKAction.waitForDuration(enemyLogic)
-        self.runAction(enemyAction, completion: {
+        let enemyAction:SKAction = SKAction.wait(forDuration: enemyLogic)
+        self.run(enemyAction, completion: {
                 self.tellEnemiesWhereHeroIs()
             } )
         
-        mazeWorld!.enumerateChildNodesWithName("enemy*") {
+        mazeWorld!.enumerateChildNodes(withName: "enemy*") {
             node, stop in
             
             if let enemy = node as? Enemy {
@@ -569,26 +569,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
     }
     
-    func returnTheDirection(enemy:Enemy) -> HeroIs {
+    func returnTheDirection(_ enemy:Enemy) -> HeroIs {
         
         if (self.hero!.position.x < enemy.position.x && self.hero!.position.y < enemy.position.y) {
             
-           return HeroIs.Southwest
+           return HeroIs.southwest
             
         }else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y < enemy.position.y) {
             
-            return HeroIs.Southeast
+            return HeroIs.southeast
             
         } else if (self.hero!.position.x < enemy.position.x && self.hero!.position.y >  enemy.position.y) {
             
-            return HeroIs.Northwest
+            return HeroIs.northwest
             
         } else if (self.hero!.position.x > enemy.position.x && self.hero!.position.y >  enemy.position.y) {
             
-            return HeroIs.Northeast
+            return HeroIs.northeast
         }else {
            
-            return HeroIs.Northeast
+            return HeroIs.northeast
         }
         
     }
@@ -610,7 +610,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         
         for (name, location) in enemyDict {
             
-            mazeWorld!.childNodeWithName(name)?.position = location
+            mazeWorld!.childNode(withName: name)?.position = location
         }
         
     }
@@ -625,7 +625,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }
 
-        currentLevel++
+        currentLevel += 1
         
         
         
@@ -645,9 +645,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     func loadNextTMXLevel() {
         
         let scene:GameScene = GameScene(size: self.size)
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         
-        self.view?.presentScene(scene, transition: SKTransition.fadeWithDuration(1) )
+        self.view?.presentScene(scene, transition: SKTransition.fade(withDuration: 1) )
         
     }
     
@@ -657,9 +657,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         currentSKSFile = nextSKSFile!
         
         let scene = GameScene.unarchiveFromFile(currentSKSFile) as? GameScene
-        scene!.scaleMode = .AspectFill
+        scene!.scaleMode = .aspectFill
         
-        self.view?.presentScene(scene!, transition: SKTransition.fadeWithDuration(1))
+        self.view?.presentScene(scene!, transition: SKTransition.fade(withDuration: 1))
         
         
     }
@@ -671,16 +671,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         if(livesLeft == 0) {
             
             gameLabel!.text = "Game Over"
-            gameLabel!.position = CGPointZero
-            gameLabel!.horizontalAlignmentMode = .Center
+            gameLabel!.position = CGPoint.zero
+            gameLabel!.horizontalAlignmentMode = .center
             
             playBackgroundSound("endgame")
             
-            let scaleAction:SKAction = SKAction.scaleTo(0.2, duration: 3.0)
-            let fadeAction:SKAction = SKAction.fadeOutWithDuration(2)
+            let scaleAction:SKAction = SKAction.scale(to: 0.2, duration: 3.0)
+            let fadeAction:SKAction = SKAction.fadeOut(withDuration: 2)
             let seqAction:SKAction = SKAction.group([fadeAction, scaleAction])
             
-            mazeWorld!.runAction(seqAction, completion: {
+            mazeWorld!.run(seqAction, completion: {
                 
                 self.resetGame()
             } )
@@ -707,7 +707,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
             
         }
 
-       self.viewController!.performSegueWithIdentifier("gameOver" , sender: nil)
+       self.viewController!.performSegue(withIdentifier: "gameOver" , sender: nil)
         
 //        if( useTMXFiles == true) {
 //            
@@ -728,18 +728,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     func createLabel() {
         
         gameLabel = SKLabelNode(fontNamed: "BM germar")
-        gameLabel!.horizontalAlignmentMode = .Left
-        gameLabel!.verticalAlignmentMode = .Center
-        gameLabel!.fontColor = SKColor.whiteColor()
+        gameLabel!.horizontalAlignmentMode = .left
+        gameLabel!.verticalAlignmentMode = .center
+        gameLabel!.fontColor = SKColor.white
         gameLabel!.text = "Lives: \(livesLeft)"
         
         addChild(gameLabel!)
         
-        if(UIDevice.currentDevice().userInterfaceIdiom == .Phone) {
+        if(UIDevice.current.userInterfaceIdiom == .phone) {
             
             gameLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 3))
             
-        }else if(UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
+        }else if(UIDevice.current.userInterfaceIdiom == .pad) {
             
             gameLabel!.position = CGPoint(x: -(self.size.width / 2.3), y: -(self.size.height / 2.3))
             
@@ -749,7 +749,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     
     
     
-    func createBackground(image:String) {
+    func createBackground(_ image:String) {
         
         parallaxBG = SKSpriteNode(imageNamed: image)
         mazeWorld!.addChild(parallaxBG!)
@@ -759,7 +759,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
     }
     
     
-    func playBackgroundSound(Sound:String) {
+    func playBackgroundSound(_ Sound:String) {
         
         
         if (bgSoundPlayer != nil) {
@@ -770,11 +770,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate, NSXMLParserDelegate {
         }
         
         
-        let fileURL:NSURL = NSBundle.mainBundle().URLForResource( Sound, withExtension: "mp3" )!
+        let fileURL:URL = Bundle.main.url( forResource: Sound, withExtension: "mp3" )!
         
         do {
         
-                bgSoundPlayer = try AVAudioPlayer(contentsOfURL: fileURL)
+                bgSoundPlayer = try AVAudioPlayer(contentsOf: fileURL)
             
         }catch {
             

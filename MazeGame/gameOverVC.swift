@@ -12,9 +12,9 @@ import UIKit
 class gameOverVC: UIViewController {
 
 
-    @IBAction func restartPressed(sender: AnyObject) {
+    @IBAction func restartPressed(_ sender: AnyObject) {
     
-        performSegueWithIdentifier("restartGame", sender: nil)
+        performSegue(withIdentifier: "restartGame", sender: nil)
         
     }
 

@@ -23,22 +23,22 @@ enum BodyType:UInt32 {
 
 
 enum Direction {
-    case Up, Down, Right, Left, None
+    case up, down, right, left, none
 }
 
 enum DesiredDirection {
-    case Up, Down, Right, Left, None
+    case up, down, right, left, none
 }
 
 
 enum HeroIs {
     
-    case Southwest, Southeast, Northwest, Northeast
+    case southwest, southeast, northwest, northeast
 }
 
 enum EnemyDirection {
     
-    case Up, Down, Left, Right
+    case up, down, left, right
 }
 
 var livesLeft:Int = 3

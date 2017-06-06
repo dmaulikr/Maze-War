@@ -15,10 +15,10 @@ import SpriteKit
 class Enemy: SKNode {
     
     // MARK: Variables
-    var heroLocationIs = HeroIs.Southwest
-    var currentDirection = EnemyDirection.Up
+    var heroLocationIs = HeroIs.southwest
+    var currentDirection = EnemyDirection.up
     var enemySpeed:Float = 3
-    var previousLocation1: CGPoint = CGPointZero
+    var previousLocation1: CGPoint = CGPoint.zero
     var previousLocation2: CGPoint = CGPoint(x: 1, y: 1)
     var isStuck:Bool = false
     
@@ -66,10 +66,10 @@ class Enemy: SKNode {
     
     // MARK: Functions
     
-    func setupPhysics(size: CGSize) {
+    func setupPhysics(_ size: CGSize) {
         
         // self.physicsBody = SKPhysicsBody(circleOfRadius: enemySprite.size.width / 2  )
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: size )
+        self.physicsBody = SKPhysicsBody(rectangleOf: size )
         self.physicsBody?.categoryBitMask = BodyType.enemy.rawValue
         self.physicsBody?.collisionBitMask = BodyType.boundary.rawValue | BodyType.boundary2.rawValue | BodyType.enemy.rawValue
         self.physicsBody?.contactTestBitMask = BodyType.hero.rawValue | BodyType.enemy.rawValue
@@ -84,42 +84,42 @@ class Enemy: SKNode {
         
         switch (heroLocationIs) {
             
-        case .Southwest:
-            if (previousDirection == .Down) {
+        case .southwest:
+            if (previousDirection == .down) {
                 
-                currentDirection = .Left
+                currentDirection = .left
             } else {
                 
-                currentDirection = .Down
+                currentDirection = .down
             }
-        case .Southeast:
+        case .southeast:
             
-            if ( previousDirection == .Down) {
+            if ( previousDirection == .down) {
                 
-                currentDirection = .Right
+                currentDirection = .right
             } else {
                 
-                currentDirection = .Down
-            }
-            
-        case .Northeast:
-            
-            if ( previousDirection == .Up) {
-                
-                currentDirection = .Right
-            } else {
-                
-                currentDirection = .Up
+                currentDirection = .down
             }
             
-        case .Northwest:
+        case .northeast:
             
-            if ( previousDirection == .Up) {
+            if ( previousDirection == .up) {
                 
-                currentDirection = .Left
+                currentDirection = .right
             } else {
                 
-                currentDirection = .Up
+                currentDirection = .up
+            }
+            
+        case .northwest:
+            
+            if ( previousDirection == .up) {
+                
+                currentDirection = .left
+            } else {
+                
+                currentDirection = .up
             }
             
             
@@ -148,16 +148,16 @@ class Enemy: SKNode {
             
             switch (dice) {
             case 0:
-                currentDirection = .Up
+                currentDirection = .up
                 
             case 1:
-                currentDirection = .Left
+                currentDirection = .left
                 
             case 2:
-                currentDirection = .Right
+                currentDirection = .right
                 
             default:
-                currentDirection = .Down
+                currentDirection = .down
             }
         }
         
@@ -170,54 +170,54 @@ class Enemy: SKNode {
             then add some to either left up down depending on hero compass location
             
         */
-        if (currentDirection == .Up) {
+        if (currentDirection == .up) {
             
             self.position = CGPoint(x: self.position.x, y: self.position.y + CGFloat(enemySpeed) )
             
-            if (heroLocationIs == .Northeast) {
+            if (heroLocationIs == .northeast) {
                 
                 self.position = CGPoint(x: self.position.x + CGFloat(enemySpeed), y: self.position.y  )
                 
-            } else if (heroLocationIs == .Northwest) {
+            } else if (heroLocationIs == .northwest) {
                 
                 self.position = CGPoint(x: self.position.x -  CGFloat(enemySpeed), y: self.position.y  )
             }
             
-        } else if ( currentDirection == .Down){
+        } else if ( currentDirection == .down){
             
             self.position = CGPoint(x: self.position.x  , y: self.position.y - CGFloat(enemySpeed) )
             
-            if ( heroLocationIs == .Southeast) {
+            if ( heroLocationIs == .southeast) {
                 
                 self.position = CGPoint(x: self.position.x + CGFloat(enemySpeed)  , y: self.position.y  )
                 
-            } else if ( heroLocationIs == .Southwest) {
+            } else if ( heroLocationIs == .southwest) {
                 
                 self.position = CGPoint(x: self.position.x - CGFloat(enemySpeed)  , y: self.position.y  )
             }
             
-        } else if ( currentDirection == .Right){
+        } else if ( currentDirection == .right){
             
             self.position = CGPoint(x: self.position.x + CGFloat(enemySpeed) , y: self.position.y )
             
-            if ( heroLocationIs == .Southeast) {
+            if ( heroLocationIs == .southeast) {
                 
                 self.position = CGPoint(x: self.position.x , y: self.position.y - CGFloat(enemySpeed) )
                 
-            } else  if ( heroLocationIs == .Northeast) {
+            } else  if ( heroLocationIs == .northeast) {
                 
                 self.position = CGPoint(x: self.position.x , y: self.position.y + CGFloat(enemySpeed)  )
             }
             
-        } else if ( currentDirection == .Left){
+        } else if ( currentDirection == .left){
             
             self.position = CGPoint(x: self.position.x - CGFloat(enemySpeed) , y: self.position.y  )
             
-            if ( heroLocationIs == .Southwest) {
+            if ( heroLocationIs == .southwest) {
                 
                 self.position = CGPoint(x: self.position.x , y: self.position.y - CGFloat(enemySpeed) )
                 
-            } else if ( heroLocationIs == .Northwest) {
+            } else if ( heroLocationIs == .northwest) {
                 
                 self.position = CGPoint(x: self.position.x , y: self.position.y + CGFloat(enemySpeed)  )
             }

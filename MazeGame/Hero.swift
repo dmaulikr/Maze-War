@@ -16,11 +16,11 @@ class Hero: SKNode {
     
     // MARK: Properties
     
-    private var _objectSprite:SKSpriteNode?
-    private var _physicsBodySize: CGSize!
+    fileprivate var _objectSprite:SKSpriteNode?
+    fileprivate var _physicsBodySize: CGSize!
     var currentSpeed: Float = 2
-    var currentDirection = Direction.Right
-    var desiredDirection = DesiredDirection.None
+    var currentDirection = Direction.right
+    var desiredDirection = DesiredDirection.none
     
     var movingAnimation: SKAction = SKAction()
     
@@ -95,7 +95,7 @@ class Hero: SKNode {
         }
         
         physicsBodySize = CGSize(width: objectSprite.size.width * 1.2 , height: objectSprite.size.height * 1.2)
-        self.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize)
+        self.physicsBody = SKPhysicsBody(rectangleOf: physicsBodySize)
             
         let bodyShape:String = heroDict["BodyShape"] as! String
         
@@ -105,12 +105,12 @@ class Hero: SKNode {
                 
             }else {
                 
-                self.physicsBody = SKPhysicsBody(rectangleOfSize: physicsBodySize)
+                self.physicsBody = SKPhysicsBody(rectangleOf: physicsBodySize)
 
             }
             
         self.physicsBody!.friction = 0 // smooth
-        self.physicsBody!.dynamic = true // true keeps the object within boundries better
+        self.physicsBody!.isDynamic = true // true keeps the object within boundries better
         self.physicsBody!.restitution = 0 // no bounce
         self.physicsBody!.allowsRotation = false //
         self.physicsBody!.affectedByGravity = false
@@ -145,23 +145,23 @@ class Hero: SKNode {
     func update() {
         
         switch currentDirection {
-        case .Right:
+        case .right:
             self.position = CGPoint(x: self.position.x + CGFloat(currentSpeed), y: self.position.y)
             objectSprite.zRotation = CGFloat(degreesToRadians(0))
             
-        case .Left:
+        case .left:
             self.position = CGPoint(x: self.position.x - CGFloat(currentSpeed), y: self.position.y)
             objectSprite.zRotation = CGFloat(degreesToRadians(180))
             
-        case .Up:
+        case .up:
             self.position = CGPoint(x: self.position.x , y: self.position.y + CGFloat(currentSpeed))
             objectSprite.zRotation = CGFloat(degreesToRadians(90))
             
-        case .Down:
+        case .down:
             self.position = CGPoint(x: self.position.x , y: self.position.y - CGFloat(currentSpeed))
             objectSprite.zRotation = CGFloat(degreesToRadians(-90))
             
-        case .None:
+        case .none:
             self.position = CGPoint(x: self.position.x , y: self.position.y)
             
         
@@ -169,7 +169,7 @@ class Hero: SKNode {
     }
     
     
-    func degreesToRadians(degrees: Double) -> Double {
+    func degreesToRadians(_ degrees: Double) -> Double {
         return degrees / 180 * Double(M_PI)
     }
     
@@ -178,17 +178,17 @@ class Hero: SKNode {
         
         if (upBlocked == true) {
             
-            desiredDirection = DesiredDirection.Up
+            desiredDirection = DesiredDirection.up
             
         }else {
             
             
-            currentDirection = .Up
-            desiredDirection = .None
+            currentDirection = .up
+            desiredDirection = .none
             runAnimation()
             
             downBlocked = false
-            self.physicsBody?.dynamic = true
+            self.physicsBody?.isDynamic = true
             
             createUpSensorPhysicsBody(whileTravellingUpOrDown: true)
             createDownSensorPhysicsBody(whileTravellingUpOrDown: true)
@@ -201,17 +201,17 @@ class Hero: SKNode {
         
         if (downBlocked == true) {
             
-            desiredDirection = DesiredDirection.Down
+            desiredDirection = DesiredDirection.down
             
         }else {
             
             
-            currentDirection = .Down
-            desiredDirection = .None
+            currentDirection = .down
+            desiredDirection = .none
             runAnimation()
             
             upBlocked = false
-            self.physicsBody?.dynamic = true
+            self.physicsBody?.isDynamic = true
             
             createUpSensorPhysicsBody(whileTravellingUpOrDown: true)
             createDownSensorPhysicsBody(whileTravellingUpOrDown: true)
@@ -224,17 +224,17 @@ class Hero: SKNode {
         
         if (leftBlocked == true) {
             
-            desiredDirection = DesiredDirection.Left
+            desiredDirection = DesiredDirection.left
             
         }else {
             
             
-            currentDirection = .Left
-            desiredDirection = .None
+            currentDirection = .left
+            desiredDirection = .none
             runAnimation()
             
             rightBlocked = false
-            self.physicsBody?.dynamic = true
+            self.physicsBody?.isDynamic = true
             
             createUpSensorPhysicsBody(whileTravellingUpOrDown: false)
             createDownSensorPhysicsBody(whileTravellingUpOrDown: false)
@@ -247,16 +247,16 @@ class Hero: SKNode {
         
         if (rightBlocked == true) {
             
-            desiredDirection = DesiredDirection.Right
+            desiredDirection = DesiredDirection.right
             
         }else {
             
-            currentDirection = .Right
-            desiredDirection = .None
+            currentDirection = .right
+            desiredDirection = .none
             runAnimation()
             
             leftBlocked = false
-            self.physicsBody?.dynamic = true
+            self.physicsBody?.isDynamic = true
 
             
             createUpSensorPhysicsBody(whileTravellingUpOrDown: false)
@@ -269,21 +269,21 @@ class Hero: SKNode {
     
     //MARK: Animation Functions
     
-    func setUpAnimationWithArray(theArray:NSArray, andAtlasNamed theAtlas:String ) {
+    func setUpAnimationWithArray(_ theArray:NSArray, andAtlasNamed theAtlas:String ) {
         
         let atlas = SKTextureAtlas(named: theAtlas) //without the .atlas extension
         
         
         var atlasTextures:[SKTexture] = []
         
-        for (var i = 0; i < theArray.count; i++) {
+        for i in 0 ..< theArray.count {
             
             let texture:SKTexture = atlas.textureNamed( theArray[i] as! String  )
-            atlasTextures.insert (texture, atIndex:i)
+            atlasTextures.insert (texture, at:i)
         }
         
-        let atlasAnimation = SKAction.animateWithTextures(atlasTextures, timePerFrame: 1.0/30, resize: true, restore:false )
-        movingAnimation = SKAction.repeatActionForever(atlasAnimation)
+        let atlasAnimation = SKAction.animate(with: atlasTextures, timePerFrame: 1.0/30, resize: true, restore:false )
+        movingAnimation = SKAction.repeatForever(atlasAnimation)
         
         
     }
@@ -297,16 +297,16 @@ class Hero: SKNode {
         
         for x in 0..<array.count {
             let texture: SKTexture = atlas.textureNamed(array[x])
-            atlasTextures.insert(texture, atIndex: x)
+            atlasTextures.insert(texture, at: x)
         }
         
-        let atlasAnimation = SKAction.animateWithTextures(atlasTextures, timePerFrame: 1.0/30, resize: true, restore: false)
-        movingAnimation = SKAction.repeatActionForever(atlasAnimation)
+        let atlasAnimation = SKAction.animate(with: atlasTextures, timePerFrame: 1.0/30, resize: true, restore: false)
+        movingAnimation = SKAction.repeatForever(atlasAnimation)
     }
     
     func runAnimation() {
        
-        objectSprite.runAction(movingAnimation)
+        objectSprite.run(movingAnimation)
         
     }
     
@@ -317,8 +317,8 @@ class Hero: SKNode {
     
     // MARK: Sensor PHysics Body
     
-    func createUpSensorPhysicsBody(whileTravellingUpOrDown whileTravellingUpOrDown: Bool) {
-        var size:CGSize = CGSizeZero
+    func createUpSensorPhysicsBody(whileTravellingUpOrDown: Bool) {
+        var size:CGSize = CGSize.zero
         
         if(whileTravellingUpOrDown == true) {
             
@@ -330,7 +330,7 @@ class Hero: SKNode {
         }
         
         nodeUp!.physicsBody = nil // get rid of any body
-        let bodyUp:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size)
+        let bodyUp:SKPhysicsBody = SKPhysicsBody(rectangleOf: size)
         nodeUp!.physicsBody = bodyUp
         nodeUp!.physicsBody?.categoryBitMask = BodyType.sensorUp.rawValue
         nodeUp!.physicsBody?.collisionBitMask = 0
@@ -340,9 +340,9 @@ class Hero: SKNode {
         
     }
     
-    func createDownSensorPhysicsBody(whileTravellingUpOrDown whileTravellingUpOrDown:Bool){
+    func createDownSensorPhysicsBody(whileTravellingUpOrDown:Bool){
         
-        var size:CGSize = CGSizeZero
+        var size:CGSize = CGSize.zero
         
         if (whileTravellingUpOrDown == true) {
             
@@ -355,7 +355,7 @@ class Hero: SKNode {
         
         
         nodeDown!.physicsBody = nil
-        let bodyDown:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size )
+        let bodyDown:SKPhysicsBody = SKPhysicsBody(rectangleOf: size )
         nodeDown!.physicsBody = bodyDown
         nodeDown!.physicsBody?.categoryBitMask = BodyType.sensorDown.rawValue
         nodeDown!.physicsBody?.collisionBitMask = 0
@@ -366,9 +366,9 @@ class Hero: SKNode {
         
     }
     
-    func createLeftSensorPhysicsBody( whileTravellingLeftOrRight whileTravellingLeftOrRight:Bool){
+    func createLeftSensorPhysicsBody( whileTravellingLeftOrRight:Bool){
         
-        var size:CGSize = CGSizeZero
+        var size:CGSize = CGSize.zero
         
         if (whileTravellingLeftOrRight == true) {
             
@@ -381,7 +381,7 @@ class Hero: SKNode {
         
         
         nodeLeft!.physicsBody = nil
-        let bodyLeft:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size )
+        let bodyLeft:SKPhysicsBody = SKPhysicsBody(rectangleOf: size )
         nodeLeft!.physicsBody = bodyLeft
         nodeLeft!.physicsBody?.categoryBitMask = BodyType.sensorLeft.rawValue
         nodeLeft!.physicsBody?.collisionBitMask = 0
@@ -393,10 +393,10 @@ class Hero: SKNode {
         
     }
     
-    func createRightSensorPhysicsBody( whileTravellingLeftOrRight whileTravellingLeftOrRight:Bool){
+    func createRightSensorPhysicsBody( whileTravellingLeftOrRight:Bool){
         
         
-        var size:CGSize = CGSizeZero
+        var size:CGSize = CGSize.zero
         
         if (whileTravellingLeftOrRight == true) {
             
@@ -410,7 +410,7 @@ class Hero: SKNode {
         
         
         nodeRight!.physicsBody = nil
-        let bodyRight:SKPhysicsBody = SKPhysicsBody(rectangleOfSize: size )
+        let bodyRight:SKPhysicsBody = SKPhysicsBody(rectangleOf: size )
         nodeRight!.physicsBody = bodyRight
         nodeRight!.physicsBody?.categoryBitMask = BodyType.sensorRight.rawValue
         nodeRight!.physicsBody?.collisionBitMask = 0
@@ -427,10 +427,10 @@ class Hero: SKNode {
         
         upBlocked = true
         
-        if(currentDirection == Direction.Up) {
+        if(currentDirection == Direction.up) {
             
-            currentDirection = Direction.None
-            self.physicsBody?.dynamic = false
+            currentDirection = Direction.none
+            self.physicsBody?.isDynamic = false
             stopAnimation()
         }
     }
@@ -439,10 +439,10 @@ class Hero: SKNode {
         
         downBlocked = true
         
-        if(currentDirection == Direction.Down) {
+        if(currentDirection == Direction.down) {
             
-            currentDirection = Direction.None
-            self.physicsBody?.dynamic = false
+            currentDirection = Direction.none
+            self.physicsBody?.isDynamic = false
             stopAnimation()
         }
         
@@ -453,10 +453,10 @@ class Hero: SKNode {
         
         rightBlocked = true
         
-        if(currentDirection == Direction.Right) {
+        if(currentDirection == Direction.right) {
             
-            currentDirection = Direction.None
-            self.physicsBody?.dynamic = false
+            currentDirection = Direction.none
+            self.physicsBody?.isDynamic = false
             stopAnimation()
         }
         
@@ -467,10 +467,10 @@ class Hero: SKNode {
         
         leftBlocked = true
         
-        if(currentDirection == Direction.Left) {
+        if(currentDirection == Direction.left) {
             
-            currentDirection = Direction.None
-            self.physicsBody?.dynamic = false
+            currentDirection = Direction.none
+            self.physicsBody?.isDynamic = false
             stopAnimation()
         }
         
@@ -483,10 +483,10 @@ class Hero: SKNode {
         
         upBlocked = false
         
-        if (desiredDirection == DesiredDirection.Up) {
+        if (desiredDirection == DesiredDirection.up) {
             
             goUp()
-            desiredDirection  == DesiredDirection.None
+            desiredDirection  == DesiredDirection.none
         }
     }
 
@@ -494,10 +494,10 @@ class Hero: SKNode {
         
         downBlocked = false
         
-        if (desiredDirection == DesiredDirection.Down) {
+        if (desiredDirection == DesiredDirection.down) {
             
             goDown()
-            desiredDirection  == DesiredDirection.None
+            desiredDirection  == DesiredDirection.none
         }
         
     }
@@ -506,10 +506,10 @@ class Hero: SKNode {
         
         rightBlocked = false
         
-        if (desiredDirection == DesiredDirection.Right) {
+        if (desiredDirection == DesiredDirection.right) {
             
             goRight()
-            desiredDirection  == DesiredDirection.None
+            desiredDirection  == DesiredDirection.none
         }
         
     }
@@ -518,10 +518,10 @@ class Hero: SKNode {
         
         leftBlocked = false
         
-        if (desiredDirection == DesiredDirection.Left) {
+        if (desiredDirection == DesiredDirection.left) {
             
             goLeft()
-            desiredDirection  == DesiredDirection.None
+            desiredDirection  == DesiredDirection.none
         }
         
     }

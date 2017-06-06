@@ -13,9 +13,9 @@ class StartScreenVC: UIViewController {
 
 
     
-    @IBAction func buttonPressed(sender: AnyObject) {
+    @IBAction func buttonPressed(_ sender: AnyObject) {
     
-            performSegueWithIdentifier("startScreen" , sender: nil)
+            performSegue(withIdentifier: "startScreen" , sender: nil)
     
     }
 
